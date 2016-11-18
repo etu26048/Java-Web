@@ -2,7 +2,7 @@ package com.spring.henallux.model;
 
 import java.sql.Date;
 
-public class Client {
+public class Customer {
 	
 	private String lastName;
 	private String firstName;

@@ -7,8 +7,14 @@ public class Order {
 	private String reference;
 	private Date commandDate;
 	private double reductionAmount;
+	private Customer customer;
 	
-	
+	public Customer getCustomer() {
+		return customer;
+	}
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
 	public String getReference() {
 		return reference;
 	}
