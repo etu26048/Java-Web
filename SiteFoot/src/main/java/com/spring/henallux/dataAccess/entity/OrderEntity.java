@@ -25,4 +25,36 @@ public class OrderEntity {
 	
 	@Column(name="NumeroCli")
 	private Customer customer;
+
+	public String getReference() {
+		return reference;
+	}
+
+	public void setReference(String reference) {
+		this.reference = reference;
+	}
+
+	public Date getOrder_date() {
+		return order_date;
+	}
+
+	public void setOrder_date(Date order_date) {
+		this.order_date = order_date;
+	}
+
+	public Double getReduction_amount() {
+		return reduction_amount;
+	}
+
+	public void setReduction_amount(Double reduction_amount) {
+		this.reduction_amount = reduction_amount;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
 }

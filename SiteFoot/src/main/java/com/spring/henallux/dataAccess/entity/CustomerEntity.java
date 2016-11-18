@@ -40,5 +40,78 @@ public class CustomerEntity {
 	
 	@Column(name="Localite")
 	private Address locality;
+
+	public long getClient_number() {
+		return client_number;
+	}
+
+	public void setClient_number(long client_number) {
+		this.client_number = client_number;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getFirst_name() {
+		return first_name;
+	}
+
+	public void setFirst_name(String first_name) {
+		this.first_name = first_name;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getPhone_number() {
+		return phone_number;
+	}
+
+	public void setPhone_number(String phone_number) {
+		this.phone_number = phone_number;
+	}
+
+	public Date getBirthdate() {
+		return birthdate;
+	}
+
+	public void setBirthdate(Date birthdate) {
+		this.birthdate = birthdate;
+	}
+
+	public String getCivility() {
+		return civility;
+	}
+
+	public void setCivility(String civility) {
+		this.civility = civility;
+	}
+
+	public Address getLocality() {
+		return locality;
+	}
+
+	public void setLocality(Address locality) {
+		this.locality = locality;
+	}
+	
 	
 }

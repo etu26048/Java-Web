@@ -23,5 +23,37 @@ public class PromoEntity {
 	
 	@Column(name="DateFin")
 	private Date end_date;
+
+	public Integer getReference() {
+		return reference;
+	}
+
+	public void setReference(Integer reference) {
+		this.reference = reference;
+	}
+
+	public Double getPercent() {
+		return percent;
+	}
+
+	public void setPercent(Double percent) {
+		this.percent = percent;
+	}
+
+	public Date getStart_date() {
+		return start_date;
+	}
+
+	public void setStart_date(Date start_date) {
+		this.start_date = start_date;
+	}
+
+	public Date getEnd_date() {
+		return end_date;
+	}
+
+	public void setEnd_date(Date end_date) {
+		this.end_date = end_date;
+	}
 	
 }
