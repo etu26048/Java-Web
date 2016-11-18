@@ -3,3 +3,8 @@ server:
   # port is used by spring-boot-admin
   port: 8084
   contextPath: /SiteFoot
+  
+  spring:
+    datasource:
+      password: root
+      url: jdbc:mysql://localhost:3306/sitefoot?user=root
