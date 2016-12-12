@@ -6,19 +6,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Langue")
+@Table(name="langue")
 public class LanguageEntity {
 
 	@Id
-	@Column(name="IdLangue")
-	private String langue_id;
-
-	public String getLangue_id() {
-		return langue_id;
-	}
-
-	public void setLangue_id(String langue_id) {
-		this.langue_id = langue_id;
-	}
-	
+	@Column(name="Idlangue")
+	private String idLangue;
 }

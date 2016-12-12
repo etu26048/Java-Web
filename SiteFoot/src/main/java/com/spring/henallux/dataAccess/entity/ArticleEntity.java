@@ -3,27 +3,27 @@ package com.spring.henallux.dataAccess.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.spring.henallux.model.Category;
-import com.spring.henallux.model.Promo;
-
 @Entity
-@Table(name="Produit")
+@Table(name="produit")
 public class ArticleEntity {
-	
+
 	@Id
 	@Column(name="Reference")
 	private String reference;
 	
-	@Column(name="UrlImage")
+	@Column(name="Urlimage")
 	private String urlImage;
 	
-	@Column(name="PrixUnitaire")
-	private Double unitPrice;
-	
-	@Column(name="ReferencePromo")
-	private Promo referencePromo;
+	@Column(name="Prixunitaire")
+	private Double prixUnitaire;
+
+	@JoinColumn(name="Referencecategorie",referencedColumnName="Idcategorie")
+	@ManyToOne
+	private CategoryEntity category;
 	
 	public String getReference() {
 		return reference;
@@ -41,32 +41,12 @@ public class ArticleEntity {
 		this.urlImage = urlImage;
 	}
 
-	public Double getUnitPrice() {
-		return unitPrice;
+	public Double getPrixUnitaire() {
+		return prixUnitaire;
 	}
 
-	public void setUnitPrice(Double unitPrice) {
-		this.unitPrice = unitPrice;
+	public void setPrixUnitaire(Double prixUnitaire) {
+		this.prixUnitaire = prixUnitaire;
 	}
-
-	public Promo getReferencePromo() {
-		return referencePromo;
-	}
-
-	public void setReferencePromo(Promo referencePromo) {
-		this.referencePromo = referencePromo;
-	}
-
-	public Category getReferenceCategory() {
-		return referenceCategory;
-	}
-
-	public void setReferenceCategory(Category referenceCategory) {
-		this.referenceCategory = referenceCategory;
-	}
-
-	@Column(name="ReferenceCategorie")
-	private Category referenceCategory;
 	
-
 }

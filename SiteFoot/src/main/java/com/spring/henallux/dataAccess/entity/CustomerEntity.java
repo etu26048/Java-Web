@@ -4,18 +4,20 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.spring.henallux.model.Address;
 
 @Entity
-@Table(name="Customer")
+@Table(name="customer")
 public class CustomerEntity {
 
 	@Id
-	@Column(name="NumeroClient")
-	private long client_number;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="Numeroclient")
+	private Long client_number;
 
 	@Column(name="Nom")
 	private String name;
@@ -26,26 +28,41 @@ public class CustomerEntity {
 	@Column(name="Email")
 	private String email;
 	
-	@Column(name="MotDePasse")
+	@Column(name="Motdepasse")
 	private String password;
 	
 	@Column(name="Telephone")
 	private String phone_number;
 	
-	@Column(name="DateNaissance")
+	@Column(name="Datenaissance",columnDefinition = "Date")
 	private Date birthdate;
 	
 	@Column(name="Civilite")
 	private String civility;
 	
-	@Column(name="Localite")
-	private Address locality;
+	@Column(name="Pays")
+	private String country;
+	
+	@Column(name="Ville")
+	private String city;
+	
+	@Column(name="Codepostal")
+	private Integer postalCode;
+	
+	@Column(name="Rue")
+	private String street;
+	
+	@Column(name="Numero")
+	private String Number;
+	
+	@Column(name="Boite")
+	private String box;
 
-	public long getClient_number() {
+	public Long getClient_number() {
 		return client_number;
 	}
 
-	public void setClient_number(long client_number) {
+	public void setClient_number(Long client_number) {
 		this.client_number = client_number;
 	}
 
@@ -105,13 +122,56 @@ public class CustomerEntity {
 		this.civility = civility;
 	}
 
-	public Address getLocality() {
-		return locality;
+	public String getCountry() {
+		return country;
 	}
 
-	public void setLocality(Address locality) {
-		this.locality = locality;
+	public void setCountry(String country) {
+		this.country = country;
 	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public Integer getPostalCode() {
+		return postalCode;
+	}
+
+	public void setPostalCode(Integer postalCode) {
+		this.postalCode = postalCode;
+	}
+
+	public String getStreet() {
+		return street;
+	}
+
+	public void setStreet(String street) {
+		this.street = street;
+	}
+
+	public String getNumber() {
+		return Number;
+	}
+
+	public void setNumber(String number) {
+		Number = number;
+	}
+
+	public String getBox() {
+		return box;
+	}
+
+	public void setBox(String box) {
+		this.box = box;
+	}
+	
+	
+
 	
 	
 }

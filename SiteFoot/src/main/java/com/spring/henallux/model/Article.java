@@ -7,8 +7,22 @@ public class Article {
 	private String urlImage;
 	private String reference;
 	private double unitPrice;
+	private Promo promo;
+	private Category category;
 	
 	
+	public Promo getPromo() {
+		return promo;
+	}
+	public void setPromo(Promo promo) {
+		this.promo = promo;
+	}
+	public Category getCategory() {
+		return category;
+	}
+	public void setCategory(Category category) {
+		this.category = category;
+	}
 	public String getUrlImage() {
 		return urlImage;
 	}
