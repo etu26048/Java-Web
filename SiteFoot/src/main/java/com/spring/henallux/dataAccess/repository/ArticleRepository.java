@@ -16,7 +16,28 @@ public interface ArticleRepository extends JpaRepository<ArticleEntity, String>{
 	String COUNT_ARTICLE_BY_CATEGORY = "select count(*) from ArticleEntity a where "
 										+"a.category = :idCategory";
 	
+	String COUNT_SHOES = "select count(*) from ArticleEntity a where "
+										+"a.category = 0";
+	
+	String COUNT_CLOTHES = "select count(*) from ArticleEntity a where "
+										+"a.category = 1";
+	
+	String COUNT_BALLS = "select count(*) from ArticleEntity a where "
+										+"a.category = 2";
+	
 	public List<ArticleEntity> findByCategory(CategoryEntity id);
+	
 	@Query(COUNT_ARTICLE_BY_CATEGORY)
 	public long countArticleByCategory(@Param("idCategory") Integer id);
+
+	@Query(COUNT_SHOES)
+	public Integer countShoes();
+	
+	@Query(COUNT_CLOTHES)
+	public Integer countClothes();
+	
+	@Query(COUNT_BALLS)
+	public Integer countBalls();
+	
+
 }

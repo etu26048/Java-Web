@@ -32,7 +32,7 @@
 			  <div class="thumbnail">
 				<a href = '<spring:url value="/product_detail" />'><img src="<spring:url value='/images/${article.urlImage}' />" sizes="160x160"  alt=""/></a>
 				<div class="caption">
-				  <h5>${article.reference}</h5>
+				  <h5>${article.name}</h5>
 				  <p> 
 					I'm a short description :)
 				  </p>

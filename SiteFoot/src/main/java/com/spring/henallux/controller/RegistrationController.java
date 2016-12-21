@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.spring.henallux.dataAccess.dao.CategoryDAO;
 import com.spring.henallux.dataAccess.dao.CustomerDAO;
@@ -20,8 +21,15 @@ import com.spring.henallux.model.Customer;
 
 @Controller
 @RequestMapping(value="/register")
+@SessionAttributes({RegistrationController.CURRENTUSER})
 public class RegistrationController {
 
+	protected static final String CURRENTUSER = "currentUser";
+	
+	@ModelAttribute(CURRENTUSER)
+	public Customer customer(){
+		return new Customer();
+	}
 	@Autowired
 	private CustomerDAO customerDAO;
 	
@@ -30,7 +38,7 @@ public class RegistrationController {
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public String home(Model model
-			,@ModelAttribute(value = "formCustomer")Customer customer
+			,@ModelAttribute(value = CURRENTUSER)Customer customer
 			,Locale locale){
 		ArrayList<Category> categories = categoryDAO.getLabelCategory(locale.getLanguage());
 		model.addAttribute("labelsCategory",categories);

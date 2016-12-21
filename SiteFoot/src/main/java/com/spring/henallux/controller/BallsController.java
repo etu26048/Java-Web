@@ -28,8 +28,8 @@ public class BallsController {
 			Locale locale){
 		ArrayList<Category> categories = categoryDAO.getLabelCategory(locale.getLanguage());
 		model.addAttribute("labelsCategory",categories);
-		
-		model.addAttribute("articles",articleDAO.getArticlesByCategory(categoryDAO.getSearchCategory((long)2)));
+		model.addAttribute("ballsCount",articleDAO.countBalls());
+		model.addAttribute("articles",articleDAO.getArticlesByCategory(categoryDAO.getSearchCategory((long)2),locale.getLanguage()));
 		model.addAttribute("categories",categoryDAO.getAllCategories());
 		
 		model.addAttribute("countArticles",articleDAO.countAllArticles());

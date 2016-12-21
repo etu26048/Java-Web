@@ -30,7 +30,7 @@
 	<div id="header">
 		<div class="container">
 		<div id="welcomeLine" class="row">
-			<div class="span6">Welcome!<strong> User</strong></div>
+			<div class="span6"><spring:message code="Welcome"></spring:message><strong> ${currentUser.lastName }</strong></div>
 			<div class="span6">
 			<div class="pull-right">
 				<spring:url var="localeFr" value="">
@@ -70,11 +70,11 @@
 				 <li class=""><a href="<spring:url value='/${category.id}' />">${category.name}</a></li>
 			 </c:forEach>
 				 <li>
-					 <a class="" href="<spring:url value='/register' />"><span>Sign up</span></a>
+					 <a class="" href="<spring:url value='/register' />"><span><spring:message code="Signin"></spring:message></span></a>
 				 </li>
 				 <!--<spring:message code="Signin" />-->
 				 <li>
-					 <a href="<spring:url value='/login' />" role="button" data-toggle="modal" style="padding-right:0"><span class="btn btn-large btn-success">Login</span></a>		  
+					 <a href="<spring:url value='/login' />" role="button" data-toggle="modal" style="padding-right:0"><span class="btn btn-large btn-success"><spring:message code="Login"></spring:message></span></a>		  
 				 </li>
 				 <!--<spring:message code="Login" />	-->
 		    </ul>

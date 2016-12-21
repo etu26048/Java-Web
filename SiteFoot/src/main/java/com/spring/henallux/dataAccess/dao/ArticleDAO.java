@@ -21,6 +21,9 @@ public class ArticleDAO {
 	@Autowired
 	private ProviderConverter providerConverter;
 	
+	@Autowired
+	private ArticleTraductionDAO articleTraductionDAO;
+	
 	public Article save(Article article){
 		ArticleEntity articleEntity = providerConverter.articleModelToArticleEntity(article);
 		articleEntity = articleRepository.save(articleEntity);
@@ -41,13 +44,40 @@ public class ArticleDAO {
 		return articleRepository.count();
 	}
 	
-	public ArrayList<Article> getArticlesByCategory(CategoryEntity id){
+	public ArrayList<Article> getArticlesByCategory(CategoryEntity id, String codeLanguage){
 		List<ArticleEntity> articlesEntity = articleRepository.findByCategory(id);
 		ArrayList<Article> articles = new ArrayList<Article>();
 		for(ArticleEntity value : articlesEntity){
 			Article article = providerConverter.articleEntityToModel(value);
+			article.setName(articleTraductionDAO.getTradLabelByArticle(value.getReference(), codeLanguage));
 			articles.add(article);
 		}
 		return articles;
 	}
+	
+	public Integer countShoes(){
+		return articleRepository.countShoes();
+	}
+	
+	public Integer countClothes(){
+		return articleRepository.countClothes();
+	}
+	
+	public Integer countBalls(){
+		return articleRepository.countBalls();
+	}
+	
+	public Article findArticleById(String id){
+		return providerConverter.articleEntityToModel(articleRepository.findOne(id));
+	}
+	
+	/*public ArrayList<Article> getAllArticlesTraduction(String codeLanguage){
+		ArrayList<Article> articles = getAllArticles();
+		for(Article value : articles){
+			value.setName(articleTraductionDAO.getTradLabelByArticle(value.getReference(), codeLanguage));
+		}
+		return articles;
+	}*/
+	
+	
 }

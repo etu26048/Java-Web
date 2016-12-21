@@ -31,6 +31,9 @@ public class CustomerEntity {
 	@Column(name="Motdepasse")
 	private String password;
 	
+	@Column(name="ConfirmPw")
+	private String confirmPassword;
+	
 	@Column(name="Telephone")
 	private String phone_number;
 	
@@ -169,6 +172,15 @@ public class CustomerEntity {
 	public void setBox(String box) {
 		this.box = box;
 	}
+
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
+	
 	
 	
 

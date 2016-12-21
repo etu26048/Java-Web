@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.spring.henallux.dataAccess.dao.CategoryDAO;
 import com.spring.henallux.dataAccess.dao.CustomerDAO;
@@ -17,6 +18,7 @@ import com.spring.henallux.model.Customer;
 
 @Controller
 @RequestMapping(value="/login")
+@SessionAttributes({"currentUser"})
 public class LoginController {
 	
 	private String password;

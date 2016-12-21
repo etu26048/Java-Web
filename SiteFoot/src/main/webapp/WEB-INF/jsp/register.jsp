@@ -11,7 +11,7 @@
 				id="userInscriptionForm" 
 				method="POST"
 				action="/SiteFoot/register/create"
-				modelAttribute="formCustomer" >
+				modelAttribute="currentUser" >
 				
 		<h4>Your personal information</h4>
 		<div class="control-group">
@@ -49,9 +49,9 @@
 		</div>
 	</div>
 	<div class="control-group">
-		<label class="control-label" for="inputPassword2">Confirm Password <sup>*</sup></label>
+		<form:label class="control-label" path="confirmPassword">Confirm Password <sup>*</sup></form:label>
 		<div class="controls">
-		  <input type="password" id="inputPassword2" placeholder="Password">
+		  <form:input type="password"  path="confirmPassword" placeholder="Password" />
 		</div>
 	</div>
 		<div class="control-group">

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.spring.henallux.dataAccess.dao.ArticleDAO;
 import com.spring.henallux.dataAccess.dao.CategoryDAO;
-import com.spring.henallux.model.Article;
 import com.spring.henallux.model.Category;
 
 @Controller

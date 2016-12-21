@@ -28,8 +28,8 @@ public class ClothesController {
 			Locale locale){
 		ArrayList<Category> categories = categoryDAO.getLabelCategory(locale.getLanguage());
 		model.addAttribute("labelsCategory",categories);
-		
-		model.addAttribute("articles",articleDAO.getArticlesByCategory(categoryDAO.getSearchCategory((long)1)));
+		model.addAttribute("clothesCount",articleDAO.countClothes());
+		model.addAttribute("articles",articleDAO.getArticlesByCategory(categoryDAO.getSearchCategory((long)1),locale.getLanguage()));
 		model.addAttribute("categories",categoryDAO.getAllCategories());
 		
 		model.addAttribute("countArticles",articleDAO.countAllArticles());

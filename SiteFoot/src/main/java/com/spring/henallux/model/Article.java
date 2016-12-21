@@ -6,11 +6,20 @@ public class Article {
 	
 	private String urlImage;
 	private String reference;
-	private double unitPrice;
+	private Double unitPrice;
 	private Promo promo;
 	private Category category;
+	private String name;
 	
-	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public void setUnitPrice(Double unitPrice) {
+		this.unitPrice = unitPrice;
+	}
 	public Promo getPromo() {
 		return promo;
 	}

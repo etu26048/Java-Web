@@ -21,6 +21,9 @@ public class Customer {
 	@NotNull
 	@Size(min=5,max=20)
 	private String password;
+	@NotNull
+	@Size(min=5, max=20)
+	private String confirmPassword;
 	@Size(min=8,max=12)
 	private String phone;
 	private Date birthdate;
@@ -127,6 +130,12 @@ public class Customer {
 	}
 	public void setCity(String city) {
 		this.city = city;
+	}
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
 	}
 	
 	

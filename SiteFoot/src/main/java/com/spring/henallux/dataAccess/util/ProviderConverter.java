@@ -47,6 +47,7 @@ public class ProviderConverter {
 		customerEntity.setNumber(customer.getNumber());
 		customerEntity.setBox(customer.getPostal_box());
 		customerEntity.setPostalCode(customer.getPostalCode());
+		customerEntity.setConfirmPassword(customer.getConfirmPassword());
 		return customerEntity;
 	}
 	
@@ -64,6 +65,7 @@ public class ProviderConverter {
 		customer.setStreet(customerEntity.getStreet());
 		customer.setNumber(customerEntity.getNumber());
 		customer.setPostal_box(customerEntity.getBox());
+		customer.setConfirmPassword(customerEntity.getConfirmPassword());
 		return customer;	
 	}
 	
