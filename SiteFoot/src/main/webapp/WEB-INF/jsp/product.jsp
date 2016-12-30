@@ -6,7 +6,7 @@
 		<li><a href="index.html">Home</a> <span class="divider">/</span></li>
 		<li class="active">Products Name</li>
     </ul>
-	<h3> Products Name <small class="pull-right"> ${shoesCount} produits disponible</small></h3>	
+	<h3> Products Name <small class="pull-right">  ${countArticles} produits disponible</small></h3>	
 	<hr class="soft"/>
 	<p>
 		Nowadays the lingerie industry is one of the most successful business spheres.We always stay in touch with the latest fashion tendencies - that is why our goods are so popular and we have a great number of faithful customers all over the country.
@@ -22,6 +22,7 @@
             </select>
 		</div>
 	  </form>
+	
 <br class="clr"/>
 <div class="tab-content">
 	<div class="tab-pane  active" id="blockView">
@@ -29,17 +30,17 @@
 		<c:forEach items="${articles}" var="article">
 			<li class="span3">
 			  <div class="thumbnail">
-				<a href='<spring:url value="/product_detail" />'><img src="<spring:url value='/images/${article.urlImage}' />" sizes="160x160"  alt=""/></a>
+				<a href = '<spring:url value="/${category.id }/details?articleId=${article.reference }" />'><img src="<spring:url value='/images/${article.urlImage}' />" width="160" height="160"  alt=""/></a>
 				<div class="caption">
 				  <h5>${article.name}</h5>
 				  <p> 
 					I'm a short description :)
 				  </p>
-				   <h4 style="text-align:center">
-					   <a class="btn" href="<spring:url value='/0/details?articleId=${article.reference }' />"><i class="icon-zoom-in"><img src=" <spring:url value='/images/loupe.png' /> " sizes="17.5x14" /></i></a>
-					   <a class="btn" href="<spring:url value='/cart' />">Add to <i class="icon-shopping-cart" ><img  src="<spring:url value='/images/cart.png' />" sizes="17.5x14"/></i></a> 
+				  <h4 style="text-align:center">
+				  	   <a class="btn" href="<spring:url value='/${category.id }/details?articleId=${article.reference }' />"><i class="icon-zoom-in"><img src=" <spring:url value='/images/loupe.png' /> " width="17.5" height="14" /></i></a>
+					   <a class="btn" href="<spring:url value='/${category.id }/article?itemId=${article.reference}' />">Add to <i class="icon-shopping-cart" ><img  src="<spring:url value='/images/cart.png' />"width="17.5" height="14"/></i></a> 
 					   <a class="btn btn-primary">${article.unitPrice} &euro;</a>
-				   </h4>
+				  </h4>
 				</div>
 			  </div>
 			  </li>

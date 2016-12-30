@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.spring.henallux.dataAccess.dao.ArticleDAO;
 import com.spring.henallux.dataAccess.dao.CategoryDAO;
+import com.spring.henallux.model.Article;
 import com.spring.henallux.model.Category;
 
 @Controller
@@ -30,10 +31,12 @@ public class ShoesController {
 			,Locale locale){
 		ArrayList<Category> categories = categoryDAO.getLabelCategory(locale.getLanguage());
 		model.addAttribute("labelsCategory",categories);
-		model.addAttribute("shoesCount",articleDAO.countShoes());
+		model.addAttribute("countArticles",articleDAO.countArticle((long)0));
 		model.addAttribute("articles",articleDAO.getArticlesByCategory(categoryDAO.getSearchCategory((long) 0),locale.getLanguage()));
 		model.addAttribute("categories",categoryDAO.getAllCategories());
-		return "integrated:shoes";
+		model.addAttribute("category",categories.get(0));
+		//return "integrated:shoes";
+		return "integrated:product";
 	}
 	
 	@RequestMapping(value="/details"
@@ -42,5 +45,13 @@ public class ShoesController {
 	public String goToDetails(@RequestParam(required=true) String articleId)
 	{		
 		return "redirect:/product_detail?articleId="+articleId;
+	}
+	
+	@RequestMapping(value="/article"
+			,params={"itemId"}
+			,method=RequestMethod.GET)
+	public String goToCart(@RequestParam(required = true) String itemId){
+		
+		return "redirect:/cart?itemId="+itemId;
 	}
 }

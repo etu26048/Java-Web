@@ -31,7 +31,7 @@ public class CustomerEntity {
 	@Column(name="Motdepasse")
 	private String password;
 	
-	@Column(name="ConfirmPw")
+	@Column(name="Confirmpw")
 	private String confirmPassword;
 	
 	@Column(name="Telephone")

@@ -55,20 +55,14 @@ public class ArticleDAO {
 		return articles;
 	}
 	
-	public Integer countShoes(){
-		return articleRepository.countShoes();
+	public Integer countArticle(Long id){
+		return articleRepository.countArticleByCategory(id);
 	}
 	
-	public Integer countClothes(){
-		return articleRepository.countClothes();
-	}
-	
-	public Integer countBalls(){
-		return articleRepository.countBalls();
-	}
-	
-	public Article findArticleById(String id){
-		return providerConverter.articleEntityToModel(articleRepository.findOne(id));
+	public Article findArticleById(String id, String codeLanguage){
+		Article article = providerConverter.articleEntityToModel(articleRepository.findOne(id));
+		article.setName(articleTraductionDAO.getTradLabelByArticle(article.getReference(), codeLanguage));
+		return article;
 	}
 	
 	/*public ArrayList<Article> getAllArticlesTraduction(String codeLanguage){

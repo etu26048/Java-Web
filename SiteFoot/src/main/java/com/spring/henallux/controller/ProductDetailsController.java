@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.spring.henallux.dataAccess.dao.ArticleDAO;
 import com.spring.henallux.dataAccess.dao.CategoryDAO;
@@ -16,6 +17,7 @@ import com.spring.henallux.model.Category;
 
 @Controller
 @RequestMapping(value="/product_detail")
+@SessionAttributes({"currentUser", "basket"})
 public class ProductDetailsController {
 
 	@Autowired
@@ -31,7 +33,7 @@ public class ProductDetailsController {
 		
 		ArrayList<Category> categories = categoryDAO.getLabelCategory(locale.getLanguage());
 		model.addAttribute("labelsCategory",categories);
-		model.addAttribute("article",articleDAO.findArticleById(articleId));
+		model.addAttribute("article",articleDAO.findArticleById(articleId, locale.getLanguage()));
 		return "integrated:product_details";
 	}
 }

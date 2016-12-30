@@ -15,14 +15,12 @@ import com.spring.henallux.dataAccess.dao.CategoryDAO;
 import com.spring.henallux.dataAccess.dao.CustomerDAO;
 import com.spring.henallux.model.Category;
 import com.spring.henallux.model.Customer;
+import com.spring.henallux.model.LoginForm;
 
 @Controller
 @RequestMapping(value="/login")
 @SessionAttributes({"currentUser"})
 public class LoginController {
-	
-	private String password;
-	private String login;
 	
 	@Autowired
 	private CustomerDAO customerDAO;
@@ -30,26 +28,35 @@ public class LoginController {
 	@Autowired
 	private CategoryDAO categoryDAO;
 	
-	//Comment faire pour envoyer juste le mdp et le login ? 
 	@RequestMapping(method=RequestMethod.GET)
 	public String home(Model model
-			,Locale locale){
+			,Locale locale
+			,@ModelAttribute(value = "loginForm")LoginForm loginForm){
+		model.addAttribute(new LoginForm());
 		ArrayList<Category> categories = categoryDAO.getLabelCategory(locale.getLanguage());
 		model.addAttribute("labelsCategory",categories);
-		model.addAttribute("password",password);
 		return "integrated:login";
 	}
 	
-	@RequestMapping(value="/sign in",method=RequestMethod.POST)
+	@RequestMapping(value="/send",method=RequestMethod.POST)
 	public String confirmLogin(Model model
-			,@ModelAttribute(value="password")String password
-			,@ModelAttribute(value="login")String login){
+			, @ModelAttribute(value="loginForm") LoginForm loginForm){
 		
-		Customer customer = customerDAO.findLogin(login);
-		if(customer != null && customer.getPassword().equals(password))
-		{
-			//A réussi à se connecter avec succés, est redirigé vers la page d'accueil
-			return "redirect:/index";
-		}else return "integrated:erreur";
+		Customer customer = customerDAO.findLogin(loginForm.getPseudo());
+		if(customer != null){
+			if(loginForm.getPseudo().equals(customer.getMail())){
+				model.addAttribute("currentUser", customer);
+				return "redirect:/index";
+			}
+		}
+		return "integrated:errors";
+	}
+	
+	@RequestMapping(value="/disconnect", method=RequestMethod.GET)
+	public String disconnecting(Model model
+					,@ModelAttribute(value="currentUser") Customer currentUser){
+		
+		model.addAttribute("currentUser", new Customer());
+		return "redirect:/index";
 	}
 }

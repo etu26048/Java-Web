@@ -18,6 +18,7 @@ import com.spring.henallux.dataAccess.dao.CategoryDAO;
 import com.spring.henallux.dataAccess.dao.CustomerDAO;
 import com.spring.henallux.model.Category;
 import com.spring.henallux.model.Customer;
+import com.spring.henallux.service.CryptingPassword;
 
 @Controller
 @RequestMapping(value="/register")
@@ -32,6 +33,9 @@ public class RegistrationController {
 	}
 	@Autowired
 	private CustomerDAO customerDAO;
+	
+	@Autowired
+	private CryptingPassword cryptingPw;
 	
 	@Autowired
 	private CategoryDAO categoryDAO;
@@ -52,12 +56,20 @@ public class RegistrationController {
 	public String getUserForm(Model model,
 			@Valid @ModelAttribute(value="formCustomer") Customer customer
 			,final BindingResult errors){
-		if(errors.hasErrors()){
-			customerDAO.save(customer);
+		
+		if(!errors.hasErrors()){
+			try{
+				customer.setPassword(cryptingPw.cryptedPassword(customer.getPassword()));
+				customer.setConfirmPassword(cryptingPw.cryptedPassword(customer.getConfirmPassword()));
+				customerDAO.save(customer);
+			}catch(Exception e){
+				e.getStackTrace();
+			}
+			model.addAttribute("currentUser", customer);
 			return "redirect:/index";
 		}
 		else{
-			return "integrated:errors";
+			return "integrated:register";
 		}
 	}
 }

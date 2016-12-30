@@ -7,19 +7,20 @@
 <div class="span9">
 <div class="well">
 	<div class="modal-header">
-		<h3>Login Block</h3>
+		<h3><spring:message code="Login" /></h3>
 		 </div>
 		 <div class="modal-body">
 		<form:form class="form-horizontal loginFrm"
 					method="POST"
-					action="/SiteFoot/login/signin">
+					action="/SiteFoot/login/send"
+					modelAttribute="loginForm">
 		  <div class="control-group">								
-			<form:input type="text" id="inputEmail" path="Login" placeholder="Email" />
+			<form:input type="text" id="inputEmail" path="pseudo" placeholder="Email" />
 		  </div>
 		  <div class="control-group">
-			<form:input type="password" id="inputPassword" path="Password" placeholder="Password" />
+			<form:input type="password" id="inputPassword" path="password" placeholder="Password" />
 		  </div>		
-		<form:button class="btn btn-success">Sign in</form:button>
+		<form:button value='/send' class="btn btn-success">Sign in</form:button>
 		</form:form>
 	 </div>
  </div>

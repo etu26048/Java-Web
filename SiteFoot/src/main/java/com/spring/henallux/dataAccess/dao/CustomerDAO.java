@@ -37,6 +37,6 @@ public class CustomerDAO {
 	}
 	
 	public Customer findLogin(String email){
-		return customerRepository.findByEmailLike(email);
+		return providerConverter.customerEntityToCustomerModel(customerRepository.findByEmail(email));
 	}
 }

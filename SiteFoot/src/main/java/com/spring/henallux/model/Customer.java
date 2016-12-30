@@ -2,30 +2,32 @@ package com.spring.henallux.model;
 
 import java.util.Date;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class Customer {
 	
-	
+	private Long clientNumber;
 	@NotNull
 	@Size(min=2,max=50)
 	private String lastName;
 	@NotNull
 	@Size(min=2,max=50)
 	private String firstName;
-	private Long clientNumber;
 	@NotNull
 	@Size(min=5,max=100)
 	private String mail;
 	@NotNull
-	@Size(min=5,max=20)
+	@Size(min=2,max=20)
 	private String password;
 	@NotNull
-	@Size(min=5, max=20)
+	@Size(min=2, max=20)
 	private String confirmPassword;
 	@Size(min=8,max=12)
 	private String phone;
+	
 	private Date birthdate;
 	@NotNull
 	@Size(min=2,max=4)
@@ -42,6 +44,8 @@ public class Customer {
 	@Size(min=1,max=4)
 	private String postal_box;
 	@NotNull
+	@Min(value=1000)
+	@Max(value=9999)
 	private Integer postalCode;
 	@NotNull
 	@Size(min=2,max=50)

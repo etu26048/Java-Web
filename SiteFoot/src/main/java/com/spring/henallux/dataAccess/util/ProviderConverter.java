@@ -5,32 +5,35 @@ import org.springframework.stereotype.Component;
 import com.spring.henallux.dataAccess.entity.ArticleEntity;
 import com.spring.henallux.dataAccess.entity.CategoryEntity;
 import com.spring.henallux.dataAccess.entity.CustomerEntity;
+import com.spring.henallux.dataAccess.entity.OrderEntity;
+import com.spring.henallux.dataAccess.entity.ProductLineEntity;
 import com.spring.henallux.model.Article;
 import com.spring.henallux.model.Category;
 import com.spring.henallux.model.Customer;
+import com.spring.henallux.model.Order;
+import com.spring.henallux.model.ProductLine;
 
-//Sert à quoi le component ?
 @Component
 public class ProviderConverter {
 
 	
-	/*public OrderEntity orderModelToOrderEntity(Order order){
+	public OrderEntity orderModelToOrderEntity(Order order){
 		OrderEntity orderEntity = new OrderEntity();
 		orderEntity.setReference(order.getReference());
-		orderEntity.setCustomer(order.getCustomer());
+		orderEntity.setCustomerEntity(customerModelToCustomerEntity(order.getCustomer()));
 		orderEntity.setOrder_date(order.getCommandDate());
-		orderEntity.setReduction_amount(order.getReductionAmount());
+		orderEntity.setPromotion_amount(order.getReductionAmount());
 		return orderEntity;
 	}
 	
 	public Order orderEntityToOrderModel(OrderEntity orderEntity){
 		Order order = new Order();
-		order.setCustomer(orderEntity.getCustomer());
+		order.setCustomer(customerEntityToCustomerModel(orderEntity.getCustomerEntity()));
 		order.setCommandDate(orderEntity.getOrder_date());
 		order.setReference(orderEntity.getReference());
-		order.setReductionAmount(orderEntity.getReduction_amount());
+		order.setReductionAmount(orderEntity.getPromotion_amount());
 		return order;
-	}*/
+	}
 	
 	public CustomerEntity customerModelToCustomerEntity(Customer customer){
 		CustomerEntity customerEntity = new CustomerEntity();
@@ -95,6 +98,26 @@ public class ProviderConverter {
 		CategoryEntity categoryEntity = new CategoryEntity();
 		categoryEntity.setId(category.getId());
 		return categoryEntity;
+	}
+	
+	public ProductLine productLineEntityToModel(ProductLineEntity productLineEntity){
+		
+		ProductLine productLine = new ProductLine();
+		productLine.setQuantity(productLineEntity.getQuantite());
+		productLine.setOrder(orderEntityToOrderModel(productLineEntity.getOrderEntity()));
+		productLine.setProduct(articleEntityToModel(productLineEntity.getArticleEntity()));
+		productLine.setRealPrice(productLineEntity.getReal_price());
+		return productLine;
+	}
+	
+	public ProductLineEntity productLineModelToEntity(ProductLine productLine){
+		
+		ProductLineEntity productLineEntity = new ProductLineEntity();
+		productLineEntity.setQuantite((productLine.getQuantity()));
+		productLineEntity.setOrderEntity(orderModelToOrderEntity(productLine.getOrder()));
+		productLineEntity.setArticleEntity(articleModelToArticleEntity(productLine.getProduct()));
+		productLineEntity.setReal_price(productLine.getRealPrice());
+		return productLineEntity;
 	}
 	 
 	

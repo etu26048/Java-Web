@@ -4,7 +4,7 @@
 <html>
 	<head>
 		<title>SO FOOT</title>
-	    
+	    <meta charset="utf-8" />
 	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta charset="utf-8">
@@ -30,7 +30,7 @@
 	<div id="header">
 		<div class="container">
 		<div id="welcomeLine" class="row">
-			<div class="span6"><spring:message code="Welcome"></spring:message><strong> ${currentUser.lastName }</strong></div>
+			<div class="span6"><spring:message code="Welcome"></spring:message><strong> ${currentUser.lastName } ${currentUser.firstName } </strong></div>
 			<div class="span6">
 			<div class="pull-right">
 				<spring:url var="localeFr" value="">
@@ -50,7 +50,6 @@
 			</div>
 			</div>
 		</div>
-<!-- Navbar ================================================== -->
 		<div id="logoArea" class="navbar">
 		<a id="smallScreen" data-target="#topMenu" data-toggle="collapse" class="btn btn-navbar">
 			<span class="icon-bar"></span>
@@ -69,14 +68,24 @@
 		     <c:forEach items="${labelsCategory}" var="category">
 				 <li class=""><a href="<spring:url value='/${category.id}' />">${category.name}</a></li>
 			 </c:forEach>
-				 <li>
-					 <a class="" href="<spring:url value='/register' />"><span><spring:message code="Signin"></spring:message></span></a>
-				 </li>
-				 <!--<spring:message code="Signin" />-->
-				 <li>
-					 <a href="<spring:url value='/login' />" role="button" data-toggle="modal" style="padding-right:0"><span class="btn btn-large btn-success"><spring:message code="Login"></spring:message></span></a>		  
-				 </li>
-				 <!--<spring:message code="Login" />	-->
+			 <c:choose >
+				 <c:when test="${currentUser.mail == null}">
+					 <li>
+						 <a class="" href="<spring:url value='/register' />"><span><spring:message code="Signin"></spring:message></span></a>
+					 </li>
+					 <!--<spring:message code="Signin" />-->
+					 <li>
+						 <a href="<spring:url value='/login' />" role="button" data-toggle="modal" style="padding-right:0"><span class="btn btn-large btn-success"><spring:message code="Login"></spring:message></span></a>		  
+					 </li>
+					 <!--<spring:message code="Login" />	-->
+				 </c:when>
+				 <c:otherwise>
+					 <li>
+						 <a href="<spring:url value='/login/disconnect' />" role="button" data-toggle="modal" style="padding-right:0"><span class="btn btn-large btn-success"><spring:message code="Disconnect"></spring:message></span></a>		  
+					 </li>
+				 </c:otherwise>
+		     </c:choose>
+		     
 		    </ul>
 		  </div>
 		</div>
@@ -96,15 +105,12 @@
         <div id="mainBody">
 			<div class="container">
 			<div class="row">
-		<!-- Sidebar ================================================== -->
 			<div id="sidebar" class="span3">
 				<div class="well well-small"><a id="myCart" href="<spring:url value='/product_detail' /> "><img src="<spring:url value='/images/ico-cart.png'/>" alt="cart">3 Items in your cart  <span class="badge badge-warning pull-right">155.00 &euro;</span></a></div>
 				<br/>
+			</div>				<div>
+				<tiles:insertAttribute name="main-content" />
 			</div>
-		<!-- Sidebar end=============================================== -->
-				<div>
-					<tiles:insertAttribute name="main-content" />
-				</div>
 			</div>
 			</div>
 		</div>

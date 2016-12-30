@@ -12,5 +12,5 @@ import com.spring.henallux.model.Customer;
 @Transactional
 public interface CustomerRepository extends JpaRepository<CustomerEntity, Long> {
 
-	public Customer findByEmailLike(String email);
+	public CustomerEntity findByEmail(String email);
 }
