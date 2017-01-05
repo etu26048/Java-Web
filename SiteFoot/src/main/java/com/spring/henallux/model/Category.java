@@ -2,14 +2,29 @@ package com.spring.henallux.model;
 
 public class Category {
 	
-	private int id;
+	private Long id;
+	private String name;
+	
+	
+	public String getName() {
+		return name;
+	}
 
-	public int getId() {
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
+	
+	
+	
+	
+	
 
 }

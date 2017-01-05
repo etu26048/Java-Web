@@ -4,25 +4,63 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.spring.henallux.model.Customer;
-
 @Entity
-@Table(name="Commande")
+@Table(name="commande")
 public class OrderEntity {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="Reference")
-	private String reference;
+	private Integer reference;
 	
-	@Column(name="DateCommande")
+	@Column(name="Datecommande")
 	private Date order_date;
 	
-	@Column(name="MontantReduction")
-	private Double reduction_amount;
+	@Column(name="Montantreduction")
+	private Double promotion_amount;
 	
-	@Column(name="NumeroCli")
-	private Customer customer;
+	@JoinColumn(name="Numerocli",referencedColumnName="Numeroclient")
+	@ManyToOne
+	private CustomerEntity customerEntity;
+
+	public Integer getReference() {
+		return reference;
+	}
+
+	public void setReference(Integer reference) {
+		this.reference = reference;
+	}
+
+	public Date getOrder_date() {
+		return order_date;
+	}
+
+	public void setOrder_date(Date order_date) {
+		this.order_date = order_date;
+	}
+
+	public Double getPromotion_amount() {
+		return promotion_amount;
+	}
+
+	public void setPromotion_amount(Double promotion_amount) {
+		this.promotion_amount = promotion_amount;
+	}
+
+	public CustomerEntity getCustomerEntity() {
+		return customerEntity;
+	}
+
+	public void setCustomerEntity(CustomerEntity customerEntity) {
+		this.customerEntity = customerEntity;
+	}
+	
+	
 }

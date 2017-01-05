@@ -6,11 +6,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Langue")
+@Table(name="langue")
 public class LanguageEntity {
 
 	@Id
-	@Column(name="IdLangue")
-	private String langue_id;
-	
+	@Column(name="Idlangue")
+	private String idLangue;
 }

@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Order {
 	
-	private String reference;
+	private Integer reference;
 	private Date commandDate;
 	private double reductionAmount;
 	private Customer customer;
@@ -15,10 +15,10 @@ public class Order {
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
-	public String getReference() {
+	public Integer getReference() {
 		return reference;
 	}
-	public void setReference(String reference) {
+	public void setReference(Integer reference) {
 		this.reference = reference;
 	}
 	public Date getCommandDate() {

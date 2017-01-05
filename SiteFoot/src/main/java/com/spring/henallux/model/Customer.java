@@ -1,19 +1,57 @@
 package com.spring.henallux.model;
 
-import java.sql.Date;
+import java.util.Date;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class Customer {
 	
+	private Long clientNumber;
+	@NotNull(message="Doit être rempli")
+	@Size(min=2,max=50, message="Doit être compris entre 2 et 50 caractères")
 	private String lastName;
+	@NotNull(message="Doit être rempli")
+	@Size(min=2,max=50, message="Doit être compris entre 2 et 50 caractères")
 	private String firstName;
-	private long clientNumber;
+	@NotNull(message="Doit être rempli")
+	@Size(min=5,max=100, message="Doit être compris entre 2 et 100 caractères")
 	private String mail;
+	@NotNull
+	@Size(min=2,max=20)
 	private String password;
+	@NotNull
+	@Size(min=2, max=20)
+	private String confirmPassword;
+	//@Size(min=8,max=12)
 	private String phone;
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date birthdate;
+	@NotNull
+	@Size(min=2,max=4)
 	private String civility;
-	
-	
+	@NotNull
+	@Size(min=5,max=50)
+	private String country;
+	@NotNull
+	@Size(min=5,max=50)
+	private String street;
+	@NotNull
+	@Size(min=1,max=5)
+	private String number;
+	//@Size(min=1,max=4)
+	private String postal_box;
+	@NotNull
+	@Min(value=1000)
+	@Max(value=9999)
+	private Integer postalCode;
+	@NotNull
+	@Size(min=2,max=50)
+	private String city;
 	
 	public String getLastName() {
 		return lastName;
@@ -27,10 +65,10 @@ public class Customer {
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
-	public long getClientNumber() {
+	public Long getClientNumber() {
 		return clientNumber;
 	}
-	public void setClientNumber(long clientNumber) {
+	public void setClientNumber(Long clientNumber) {
 		this.clientNumber = clientNumber;
 	}
 	public String getMail() {
@@ -63,7 +101,50 @@ public class Customer {
 	public void setCivility(String civility) {
 		this.civility = civility;
 	}
+	public String getCountry() {
+		return country;
+	}
+	public void setCountry(String country) {
+		this.country = country;
+	}
+	public String getStreet() {
+		return street;
+	}
+	public void setStreet(String street) {
+		this.street = street;
+	}
+	public String getNumber() {
+		return number;
+	}
+	public void setNumber(String number) {
+		this.number = number;
+	}
+	public String getPostal_box() {
+		return postal_box;
+	}
+	public void setPostal_box(String postal_box) {
+		this.postal_box = postal_box;
+	}
+	public Integer getPostalCode() {
+		return postalCode;
+	}
+	public void setPostalCode(Integer postalCode) {
+		this.postalCode = postalCode;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
 	
 	
+		
 	
 }
