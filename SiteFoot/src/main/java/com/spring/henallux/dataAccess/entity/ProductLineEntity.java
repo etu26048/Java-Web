@@ -2,6 +2,8 @@ package com.spring.henallux.dataAccess.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -12,6 +14,7 @@ import javax.persistence.Table;
 public class ProductLineEntity {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="Idproduit")
 	private Integer id_produit;
 	
@@ -21,6 +24,14 @@ public class ProductLineEntity {
 	@Column(name="Prixreel")
 	private Double real_price;
 	
+	public Integer getId_produit() {
+		return id_produit;
+	}
+
+	public void setId_produit(Integer id_produit) {
+		this.id_produit = id_produit;
+	}
+
 	@JoinColumn(name="Refcommande",referencedColumnName="Reference")
 	@ManyToOne
 	private OrderEntity orderEntity;

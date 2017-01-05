@@ -7,17 +7,19 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class Customer {
 	
 	private Long clientNumber;
-	@NotNull
-	@Size(min=2,max=50)
+	@NotNull(message="Doit être rempli")
+	@Size(min=2,max=50, message="Doit être compris entre 2 et 50 caractères")
 	private String lastName;
-	@NotNull
-	@Size(min=2,max=50)
+	@NotNull(message="Doit être rempli")
+	@Size(min=2,max=50, message="Doit être compris entre 2 et 50 caractères")
 	private String firstName;
-	@NotNull
-	@Size(min=5,max=100)
+	@NotNull(message="Doit être rempli")
+	@Size(min=5,max=100, message="Doit être compris entre 2 et 100 caractères")
 	private String mail;
 	@NotNull
 	@Size(min=2,max=20)
@@ -25,9 +27,9 @@ public class Customer {
 	@NotNull
 	@Size(min=2, max=20)
 	private String confirmPassword;
-	@Size(min=8,max=12)
+	//@Size(min=8,max=12)
 	private String phone;
-	
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date birthdate;
 	@NotNull
 	@Size(min=2,max=4)
@@ -41,7 +43,7 @@ public class Customer {
 	@NotNull
 	@Size(min=1,max=5)
 	private String number;
-	@Size(min=1,max=4)
+	//@Size(min=1,max=4)
 	private String postal_box;
 	@NotNull
 	@Min(value=1000)

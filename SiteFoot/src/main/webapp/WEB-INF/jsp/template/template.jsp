@@ -25,6 +25,7 @@
 	    	href="<spring:url value='/images/ico/apple-touch-icon-72-precomposed.png'/>">
 	    <link rel="apple-touch-icon-precomposed" href="<spring:url value='/images/ico/apple-touch-icon-57-precomposed.png'/>">
 		<style type="text/css" id="enject"></style>
+		
 	</head>
 	<body>
 	<div id="header">
@@ -65,11 +66,14 @@
 				 </li>
 				 <li class=""><a href="<spring:url value='/balls' />">Balls</a>
 				 </li>-->
-		     <c:forEach items="${labelsCategory}" var="category">
-				 <li class=""><a href="<spring:url value='/${category.id}' />">${category.name}</a></li>
+		     <c:forEach items="${labelsCategory}" var="cat">
+				 <li class=""><a href="<spring:url value='/category/${cat.id}' />">${cat.name}</a></li>
 			 </c:forEach>
+			 <li>
+				 <a class="" href="<spring:url value='/category/contact' />"><span><spring:message code="Contact"></spring:message></span></a>
+			 </li>
 			 <c:choose >
-				 <c:when test="${currentUser.mail == null}">
+				 <c:when test="${empty currentUser.mail}">
 					 <li>
 						 <a class="" href="<spring:url value='/register' />"><span><spring:message code="Signin"></spring:message></span></a>
 					 </li>
@@ -79,11 +83,11 @@
 					 </li>
 					 <!--<spring:message code="Login" />	-->
 				 </c:when>
-				 <c:otherwise>
+				 <c:when test="${not empty currentUser.mail }">
 					 <li>
 						 <a href="<spring:url value='/login/disconnect' />" role="button" data-toggle="modal" style="padding-right:0"><span class="btn btn-large btn-success"><spring:message code="Disconnect"></spring:message></span></a>		  
 					 </li>
-				 </c:otherwise>
+				 </c:when>
 		     </c:choose>
 		     
 		    </ul>

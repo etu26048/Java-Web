@@ -16,15 +16,20 @@
 			<div class="span6">
 				<h3>${article.name}</h3>
 				<hr class="soft"/>
-				<form class="form-horizontal qtyFrm">
+				<form:form 
+						  method="POST"
+						  action="/SiteFoot/product_detail/addCart"
+						  modelAttribute="line"
+						  class="form-horizontal qtyFrm">
+						  
 				  <div class="control-group">
 					<label class="control-label"><span>${article.unitPrice } &euro;</span></label>
 					<div class="controls">
-					<input type="number" class="span1" placeholder="Qty."/>
-					  <button type="submit" class="btn btn-large btn-primary pull-right"> Add to cart <i class=" icon-shopping-cart"><img  src="<spring:url value='/images/cart.png' />" sizes="14x14"/></i></button>
+						<form:input path="quantity" type="number" min = "1" value = "1" class="span1" placeholder="Qty."/>
+						<form:button class="btn btn-large btn-primary pull-right"> Add to cart <i class=" icon-shopping-cart"><img  src="<spring:url value='/images/cart.png' />" sizes="14x14"/></i></form:button>
 					</div>
 				  </div>
-				</form>
+				</form:form>
 				
 				<hr class="soft"/>
 				<h4><spring:message code="Available"></spring:message></h4>

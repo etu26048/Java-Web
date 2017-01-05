@@ -1,6 +1,7 @@
 package com.spring.henallux.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Locale;
 
 import javax.validation.Valid;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.spring.henallux.dataAccess.dao.ArticleDAO;
 import com.spring.henallux.dataAccess.dao.CategoryDAO;
 import com.spring.henallux.dataAccess.dao.OrderDAO;
+import com.spring.henallux.dataAccess.dao.ProductLineDAO;
+import com.spring.henallux.model.Article;
 import com.spring.henallux.model.Cart;
 import com.spring.henallux.model.Category;
 import com.spring.henallux.model.Customer;
@@ -39,12 +42,25 @@ public class CartController {
 	@Autowired
 	private OrderDAO orderDAO;
 	
+	@Autowired
+	private ProductLineDAO productLineDAO;
+	
+	@ModelAttribute("amount")
+	private Double amout(){
+		return 0.00;
+	}
+	
+	@ModelAttribute("amountWithReduction")
+	private Double amountWithReduction(){
+		return 0.00;
+	}
+
 	@RequestMapping(method=RequestMethod.GET)
 	public String home(Model model
 				,Locale locale
 				,@ModelAttribute(value="basket")Cart cart){
 		
-		model.addAttribute("line", new Line());
+		model.addAttribute("countItems",cart.getLine_map().size());
 		ArrayList<Category> categories = categoryDAO.getLabelCategory(locale.getLanguage());
 		model.addAttribute("labelsCategory",categories);
 		return "integrated:cart";
@@ -57,52 +73,74 @@ public class CartController {
 			,@RequestParam(required = true)String itemId
 			,@ModelAttribute(value="basket")Cart cart){
 		
-		model.addAttribute("line", new Line());
+		model.addAttribute("countItems",cart.getLine_map().size());
+		Article article = articleDAO.findArticleById(itemId, locale.getLanguage());
+		model.addAttribute("line", new Line(cart.getLine_map().get(itemId).getQuantity(),article));
 		ArrayList<Category> categories = categoryDAO.getLabelCategory(locale.getLanguage());
 		model.addAttribute("labelsCategory",categories);
-		//Article article = articleDAO.findArticleById(itemId, locale.getLanguage());
 		return "integrated:cart";
 	}
 	
-	/*
+	@RequestMapping(value="/confirm_order", method=RequestMethod.POST)
+	public String confirmOrder(Model model
+					,@ModelAttribute(value="currentUser") Customer customer
+					,@Valid @ModelAttribute(value="basket") Cart cart
+					,final BindingResult errors){
+		
+		if(!errors.hasErrors()){
+			if(customer.getClientNumber() == null || customer.getMail().isEmpty()){
+				return "redirect:/login";
+			}else{
+				return "integrated:confirmOrder";
+			}
+		}else
+			return "integrated:errors";
+	}
+	
 	@RequestMapping(value="/create_order", method=RequestMethod.POST)
 	public String createOrder(Model model
 					,@ModelAttribute(value="currentUser") Customer customer
 					,@Valid @ModelAttribute(value="basket") Cart cart
+					,@ModelAttribute(value="amountWithReduction") Double reduction
 					,final BindingResult errors){
-		if(!errors.hasErrors()){
+		if(!errors.hasErrors()){								
+			//Création de la commande
+			Order order = new Order();
+			Date order_date = new Date();
+			order.setCommandDate(order_date);
+			order.setCustomer(customer);
+			order.setReductionAmount(reduction);
+			order = orderDAO.save(order);
+			
+			//Création de la ligne de commande
+			ProductLine productLine = new ProductLine();
+			for(Line line : cart.getLine_map().values()){
+				
+				productLine.setOrder(order);
+				productLine.setProduct(line.getArticle());
+				productLine.setQuantity(line.getQuantity());
+				productLine.setRealPrice(line.getArticle().getUnitPrice());
+				productLineDAO.save(productLine); 
+			}
+			
+			//Vide la hashmap en session
+			cart.getLine_map().clear();
 			return "redirect:/index";
-		}else return "integrated:errors";
+		}else{
+			return "integrated:errors";
+		}
 		
-	}*/
-	
-	@RequestMapping(value="/deleteLine")
-	public String deleteFromCart(@Valid @ModelAttribute(value="line")Line product_line
-			,@ModelAttribute(value="basket")Cart cart
-			,final BindingResult errors){
-		
-		return "integrated:cart";
 	}
 	
-	@RequestMapping(value="/minusQuantity")
-	public String reduceQuantity(@Valid @ModelAttribute(value="line")Line product_line
-			,@ModelAttribute(value="basket")Cart cart
-			,final BindingResult errors){
+	@RequestMapping(value="/delete"
+					,params={"lineKey"},
+					method=RequestMethod.GET)
+	public String deleteFromCart(@ModelAttribute(value="basket")Cart cart
+			,final BindingResult errors
+			,@RequestParam(required=true) String lineKey){
 		
-		String product_ref = product_line.getArticle().getReference();
-		Integer quantity = cart.getLine_map().get(product_ref).getQuantity();
-		cart.getLine_map().get(product_ref).setQuantity(quantity--);
-		return "integrated:cart";
+		cart.getLine_map().remove(lineKey);
+		return "redirect:/cart";
 	}
 	
-	@RequestMapping(value="/plusQuantity")
-	public String addQuantity(@Valid @ModelAttribute(value="line")Line product_line
-			,@ModelAttribute(value="basket")Cart cart
-			,final BindingResult errors){
-		
-		String product_ref = product_line.getArticle().getReference();
-		Integer quantity = cart.getLine_map().get(product_ref).getQuantity();
-		cart.getLine_map().get(product_ref).setQuantity(quantity++);
-		return "integrated:cart";
-	}
 }

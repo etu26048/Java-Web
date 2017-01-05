@@ -19,10 +19,10 @@ public class ProviderConverter {
 	
 	public OrderEntity orderModelToOrderEntity(Order order){
 		OrderEntity orderEntity = new OrderEntity();
-		orderEntity.setReference(order.getReference());
 		orderEntity.setCustomerEntity(customerModelToCustomerEntity(order.getCustomer()));
 		orderEntity.setOrder_date(order.getCommandDate());
 		orderEntity.setPromotion_amount(order.getReductionAmount());
+		orderEntity.setReference(order.getReference());
 		return orderEntity;
 	}
 	
@@ -30,8 +30,8 @@ public class ProviderConverter {
 		Order order = new Order();
 		order.setCustomer(customerEntityToCustomerModel(orderEntity.getCustomerEntity()));
 		order.setCommandDate(orderEntity.getOrder_date());
-		order.setReference(orderEntity.getReference());
 		order.setReductionAmount(orderEntity.getPromotion_amount());
+		order.setReference(orderEntity.getReference());
 		return order;
 	}
 	
@@ -51,11 +51,13 @@ public class ProviderConverter {
 		customerEntity.setBox(customer.getPostal_box());
 		customerEntity.setPostalCode(customer.getPostalCode());
 		customerEntity.setConfirmPassword(customer.getConfirmPassword());
+		customerEntity.setClient_number(customer.getClientNumber());
 		return customerEntity;
 	}
 	
 	public Customer customerEntityToCustomerModel(CustomerEntity customerEntity){
 		Customer customer= new Customer();
+		customer.setClientNumber(customerEntity.getClient_number());
 		customer.setBirthdate(customerEntity.getBirthdate());
 		customer.setCivility(customerEntity.getCivility());
 		customer.setFirstName(customerEntity.getFirst_name());
@@ -107,6 +109,7 @@ public class ProviderConverter {
 		productLine.setOrder(orderEntityToOrderModel(productLineEntity.getOrderEntity()));
 		productLine.setProduct(articleEntityToModel(productLineEntity.getArticleEntity()));
 		productLine.setRealPrice(productLineEntity.getReal_price());
+		productLine.setId_produit(productLineEntity.getId_produit());
 		return productLine;
 	}
 	
@@ -117,6 +120,7 @@ public class ProviderConverter {
 		productLineEntity.setOrderEntity(orderModelToOrderEntity(productLine.getOrder()));
 		productLineEntity.setArticleEntity(articleModelToArticleEntity(productLine.getProduct()));
 		productLineEntity.setReal_price(productLine.getRealPrice());
+		productLineEntity.setId_produit(productLine.getId_produit());
 		return productLineEntity;
 	}
 	 

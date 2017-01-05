@@ -1,6 +1,7 @@
 package com.spring.henallux.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import javax.validation.Valid;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,15 +24,10 @@ import com.spring.henallux.service.CryptingPassword;
 
 @Controller
 @RequestMapping(value="/register")
-@SessionAttributes({RegistrationController.CURRENTUSER})
+@SessionAttributes({"currentUser"})
 public class RegistrationController {
 
-	protected static final String CURRENTUSER = "currentUser";
 	
-	@ModelAttribute(CURRENTUSER)
-	public Customer customer(){
-		return new Customer();
-	}
 	@Autowired
 	private CustomerDAO customerDAO;
 	
@@ -42,19 +39,18 @@ public class RegistrationController {
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public String home(Model model
-			,@ModelAttribute(value = CURRENTUSER)Customer customer
 			,Locale locale){
 		ArrayList<Category> categories = categoryDAO.getLabelCategory(locale.getLanguage());
 		model.addAttribute("labelsCategory",categories);
 		//On passe le model à a la view et grâce à un databinding ,ici le ModelAtribute, on va pouvoir instancer customer
 		//cf Ch.Controller P.21
-		model.addAttribute("formCustomer",new Customer());
+		//model.addAttribute("currentUser",customer);
 		return "integrated:register";
 	}
 	
 	@RequestMapping(value="/create",method=RequestMethod.POST)
 	public String getUserForm(Model model,
-			@Valid @ModelAttribute(value="formCustomer") Customer customer
+			@Valid @ModelAttribute(value="currentUser") Customer customer
 			,final BindingResult errors){
 		
 		if(!errors.hasErrors()){
@@ -65,11 +61,11 @@ public class RegistrationController {
 			}catch(Exception e){
 				e.getStackTrace();
 			}
-			model.addAttribute("currentUser", customer);
 			return "redirect:/index";
 		}
 		else{
-			return "integrated:register";
+			List<ObjectError> errors_list =  errors.getAllErrors();
+			return "redirect:/register";
 		}
 	}
 }

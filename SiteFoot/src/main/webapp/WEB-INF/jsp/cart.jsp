@@ -4,101 +4,60 @@
 
 	<div class="span9">
     <ul class="breadcrumb">
-		<li><a href="index.html">Home</a> <span class="divider">/</span></li>
-		<li class="active"> SHOPPING CART</li>
+		<li><a href="index.html">Home</a> <span class="divider"></span></li>
+		<li class="active"><spring:message code="SHOPPING"/><spring:message code="CART"/></li>
     </ul>
-	<h3>  SHOPPING CART [ <small>3 Item(s) </small>]<a href="products.html" class="btn btn-large pull-right"><i class="icon-arrow-left"></i> Continue Shopping </a></h3>	
-	<hr class="soft"/>
-	<table class="table table-bordered">
-		<tr><th> I AM ALREADY REGISTERED  </th></tr>
-		 <tr> 
-		 <td>
-			<form class="form-horizontal">
-				<div class="control-group">
-				  <label class="control-label" for="inputUsername">Username</label>
-				  <div class="controls">
-					<input type="text" id="inputUsername" placeholder="Username">
-				  </div>
-				</div>
-				<div class="control-group">
-				  <label class="control-label" for="inputPassword1">Password</label>
-				  <div class="controls">
-					<input type="password" id="inputPassword1" placeholder="Password">
-				  </div>
-				</div>
-				<div class="control-group">
-				  <div class="controls">
-					<button type="submit" class="btn">Sign in</button> OR <a href="<spring:url value='/register' />" class="btn">Register Now!</a>
-				  </div>
-				</div>
-				<div class="control-group">
-					<div class="controls">
-					  <a href="forgetpass.html" style="text-decoration:underline">Forgot password ?</a>
-					</div>
-				</div>
-			</form>
-		  </td>
-		  </tr>
-	</table>		
+	<h3>  SHOPPING CART [ <small> ${countItems } Item(s) </small>]<a href="<spring:url value='/index' />" class="btn btn-large pull-right">
+	<img src="<spring:url value='/images/leftArrow.png' />" class="icon-arrow-left"></img><spring:message code="Continue"/><spring:message code="Shopping"/> </a>
+	</h3>	
+	<hr class="soft"/>	
 			
 	<form:form id="orderForm" 
 				method="POST"
-				action="/SiteFoot/cart/create_order"
+				action="/SiteFoot/cart/confirm_order"
 				modelAttribute="basket">
 				
 	<table class="table table-bordered">
               <thead>
                 <tr>
-                  <th>Product</th>
-                  <th>Description</th>
-                  <th>Quantity/Update</th>
-				  <th>Price</th>
-                  <th>Discount</th>
-                  <th>Total</th>
+                  <th><spring:message code="Product"></spring:message></th>
+                  <th><spring:message code="Reference"></spring:message></th>
+                  <th><spring:message code="Quantity/Update"></spring:message></th>
+				  <th><spring:message code="UnitPrice"></spring:message></th>
+                  <th><spring:message code="Discount"></spring:message></th>
+                  <th><spring:message code="Total"></spring:message></th>
 				</tr>
               </thead>
               <tbody>									
               	<c:forEach items="${basket.line_map}" var="product_line">
 	                <tr>
 	                  <td> <img width="60" src="<spring:url value='/images/${product_line.value.article.urlImage }' />" width="60px" height="60px" alt=""/></td>
-	                  <td>${product_line.value.article.name }</td>
+	                  <td>${product_line.value.article.reference}</td>
 					  <td>
 						<div class="input-append">
-								
-							<form:form action="" method="POST" modelAttribute="line">							
-								<form:button path="quantity" class="span1" style="max-width:34px" placeholder="${quantity }" id="appendedInputButtons" size="16" type="text"/>
-							</form:form>
-							<form:form action="/cart/minusQuantity" method="POST" modelAttribut="line">
-								<form:button path="quantity" class="btn" type="button"><i class="icon-minus"></i></form:button>
-							</form:form>
-							<form:form action="/cart/plusQuantity" method="POST" modelAttribut="line">
-								<form:button path="quantity" class="btn" type="button"><i class="icon-plus"></i></form:button>
-							</form:form>
-							<form:form action="/cart/deleteLine" method="POST" modelAttribut="line">
-								<form:button path="quantity" class="btn btn-danger" type="button"><i class="icon-remove icon-white"></i></form:button>
-							</form:form>
+									
+								<form:input path="line_map[${product_line.key}].quantity" class="span1" style="max-width:50px;" width="25px" value="${product_line.value.quantity}" id="appendedInputButtons" type="number" min="1" />
+								<a style="height:21px;" href="<spring:url value='/cart/delete?lineKey=${product_line.key}'/>" class="btn btn-danger" ><img width="39px" height="29px" style="padding:1px 2px" class="icon-remove" src="<spring:url value='/images/x-mark-14.png' />" /></a>
+				
 						</div>
 					  </td>
 	                  <td>${product_line.value.article.unitPrice } &euro;</td>
 	                  <td>0.00 &euro;</td>
-	                  <td>${product_line.value.article.unitPrice } &euro;</td>
+	                  <td>${product_line.value.article.unitPrice * product_line.value.quantity}&euro;</td>
+	                  <p hidden>${amount = amount + product_line.value.article.unitPrice * product_line.value.quantity}</p>
 	                </tr>
                 </c:forEach>				
 	                <tr>
-	                  <td colspan="6" style="text-align:right">Total Price:	</td>
-	                  <td> $228.00</td>
+	                  <td colspan="6" style="text-align:right">Total <spring:message code="Price"/>:	</td>
+	                  <td> ${amount } &euro;</td>
 	                </tr>
 					 <tr>
-	                  <td colspan="6" style="text-align:right">Total Discount:	</td>
-	                  <td> $50.00</td>
-	                </tr>
-	                 <tr>
-	                  <td colspan="6" style="text-align:right">Total Tax:	</td>
-	                  <td> $31.00</td>
+	                  <td colspan="6" style="text-align:right">Total<spring:message code="Discount"/>:	</td>
+	                  <td> ${amountWithReduction } &euro;</td>
 	                </tr>
 					 <tr>
-	                  <td colspan="6" style="text-align:right"><strong>TOTAL ($228 - $50 + $31) =</strong></td>
-	                  <td class="label label-important" style="display:block"> <strong> $155.00 </strong></td>
+	                  <td colspan="6" style="text-align:right"><strong>TOTAL </strong></td>
+	                  <td class="label label-important" style="display:block"> <strong> ${amount - amountWithReduction } &euro;</strong></td>
 	                </tr>
 				</tbody>
 	   </table>
@@ -111,7 +70,7 @@
 				<label class="control-label"><strong> PROMO CODE: </strong> </label>
 				<div class="controls">
 				<input type="text" class="input-medium" placeholder="CODE">
-				<button type="submit" class="btn"> ADD </button>
+				<button type="submit" class="btn"><spring:message code="ADD" /></button>
 				</div>
 				</div>
 				</form>
@@ -120,8 +79,8 @@
 			</tbody>
 		</table>
 				
-		<a href="products.html" class="btn btn-large"><i class="icon-arrow-left"></i> Continue Shopping </a>
-		<form:button class="btn btn-large pull-right"><spring:message code="Order"/> <i class="icon-arrow-right"></i></form:button>
+		<a href="<spring:url value='/index' />" class="btn btn-large"><img src="<spring:url value='/images/leftArrow.png' />" class="icon-arrow-left"></img><spring:message code="Continue" /><spring:message code="Shopping" /> </a>
+		<form:button class="btn btn-large pull-right"><spring:message code="Order"/> <img class="icon-arrow-right" src="<spring:url value='/images/rightArrow.png' />" /></form:button>
 	
 	</form:form>
 	

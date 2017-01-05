@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.spring.henallux.dataAccess.entity.OrderEntity;
 
 @Repository
-public interface OrderRepository extends JpaRepository<OrderEntity, String> {
+public interface OrderRepository extends JpaRepository<OrderEntity, Integer> {
 
 }

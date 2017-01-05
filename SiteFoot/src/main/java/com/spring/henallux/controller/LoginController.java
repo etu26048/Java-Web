@@ -16,6 +16,7 @@ import com.spring.henallux.dataAccess.dao.CustomerDAO;
 import com.spring.henallux.model.Category;
 import com.spring.henallux.model.Customer;
 import com.spring.henallux.model.LoginForm;
+import com.spring.henallux.service.CryptingPassword;
 
 @Controller
 @RequestMapping(value="/login")
@@ -28,11 +29,15 @@ public class LoginController {
 	@Autowired
 	private CategoryDAO categoryDAO;
 	
+	@Autowired
+	private CryptingPassword cryptingPw;
+	
 	@RequestMapping(method=RequestMethod.GET)
 	public String home(Model model
 			,Locale locale
 			,@ModelAttribute(value = "loginForm")LoginForm loginForm){
-		model.addAttribute(new LoginForm());
+		
+		model.addAttribute("loginForm", new LoginForm());
 		ArrayList<Category> categories = categoryDAO.getLabelCategory(locale.getLanguage());
 		model.addAttribute("labelsCategory",categories);
 		return "integrated:login";
@@ -44,9 +49,14 @@ public class LoginController {
 		
 		Customer customer = customerDAO.findLogin(loginForm.getPseudo());
 		if(customer != null){
-			if(loginForm.getPseudo().equals(customer.getMail())){
-				model.addAttribute("currentUser", customer);
-				return "redirect:/index";
+			try{
+				loginForm.setPassword(cryptingPw.cryptedPassword(loginForm.getPassword()));
+				if(customer.getPassword().equals(loginForm.getPassword())){
+					model.addAttribute("currentUser", customer);
+					return "redirect:/index";
+				}
+			}catch(Exception e){
+				e.printStackTrace();
 			}
 		}
 		return "integrated:errors";

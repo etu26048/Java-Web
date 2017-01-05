@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -14,8 +16,9 @@ import javax.persistence.Table;
 public class OrderEntity {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="Reference")
-	private String reference;
+	private Integer reference;
 	
 	@Column(name="Datecommande")
 	private Date order_date;
@@ -27,11 +30,11 @@ public class OrderEntity {
 	@ManyToOne
 	private CustomerEntity customerEntity;
 
-	public String getReference() {
+	public Integer getReference() {
 		return reference;
 	}
 
-	public void setReference(String reference) {
+	public void setReference(Integer reference) {
 		this.reference = reference;
 	}
 

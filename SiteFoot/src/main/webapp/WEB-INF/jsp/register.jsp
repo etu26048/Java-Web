@@ -1,6 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="include/importTags.jsp"%>
 
+<html>
+<head>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  		<link rel="stylesheet" href="/resources/demos/style.css">
+		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  		<script>
+  			$( function() {
+    				$( "#datepicker" ).datepicker();
+  			} );
+		</script>
+</head>
+<body>
 <div id="mainBody">
 	<div class="container">
 	<div class="row">
@@ -29,7 +42,7 @@
 			<form:label class="control-label" path="firstName">First name <sup>*</sup></form:label>
 			<div class="controls">
 			  <form:input type="text" path="firstName" placeholder="First Name"/>
-			  <form:errors path="firstName" />
+			  <form:errors path="firstName" ></form:errors>
 			</div>
 		 </div>
 		 <div class="control-group">
@@ -63,16 +76,8 @@
 		<div class="control-group">
 		<form:label path="birthdate" class="control-label">Date of Birth</form:label>
 		<div class="controls">
-		  <form:select path="birthdate" class="span1">
-				<form:option value="">-</form:option>
-					<form:option value="1">1&nbsp;&nbsp;</form:option>
-					<form:option value="2">2&nbsp;&nbsp;</form:option>
-					<form:option value="3">3&nbsp;&nbsp;</form:option>
-					<form:option value="4">4&nbsp;&nbsp;</form:option>
-					<form:option value="5">5&nbsp;&nbsp;</form:option>
-					<form:option value="6">6&nbsp;&nbsp;</form:option>
-					<form:option value="7">7&nbsp;&nbsp;</form:option>
-			</form:select>
+			<form:input path="birthdate" id="datepicker"/>
+			<form:errors path="birthdate"></form:errors>
 		</div>
 	  </div>
 
@@ -150,3 +155,5 @@
 </div>
 </div>
 </div>
+</body>
+</html>

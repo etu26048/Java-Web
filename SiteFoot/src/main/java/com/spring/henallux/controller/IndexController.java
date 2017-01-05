@@ -15,13 +15,20 @@ import com.spring.henallux.dataAccess.dao.ArticleDAO;
 import com.spring.henallux.dataAccess.dao.CategoryDAO;
 import com.spring.henallux.model.Cart;
 import com.spring.henallux.model.Category;
+import com.spring.henallux.model.Customer;
 
 @Controller
 @RequestMapping(value="/index")
-@SessionAttributes({"currentUser", IndexController.BASKET})
+@SessionAttributes({IndexController.CURRENTUSER, IndexController.BASKET})
 public class IndexController {
 		
 	protected static final String BASKET = "basket";
+	protected static final String CURRENTUSER = "currentUser";
+	
+	@ModelAttribute(CURRENTUSER)
+	public Customer customer(){
+		return new Customer();
+	}
 	
 	@Autowired
 	private CategoryDAO categoryDAO;
@@ -35,18 +42,12 @@ public class IndexController {
 	}
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public String home(Model model, Locale locale){
+	public String home(Model model
+			, Locale locale){
 		ArrayList<Category> categories = categoryDAO.getLabelCategory(locale.getLanguage());
 		model.addAttribute("articles",articleDAO.getAllArticles());
 		model.addAttribute("labelsCategory",categories);
 		return "integrated:index";
-	}
-	
-	/*@RequestMapping(value="/register",method=RequestMethod.GET)
-	public String goToRegisterPage(Model model){
-		
-		return "redirect:/register";
-	}*/
-	
+	}	
 	
 }
