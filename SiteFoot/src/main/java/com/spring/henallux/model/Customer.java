@@ -5,42 +5,47 @@ import java.util.Date;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class Customer {
 	
 	private Long clientNumber;
-	@NotNull(message="Doit être rempli")
+	@NotEmpty
 	@Size(min=2,max=50, message="Doit être compris entre 2 et 50 caractères")
+	@Pattern(regexp="^[A-Za-z]+$")
 	private String lastName;
-	@NotNull(message="Doit être rempli")
+	@NotEmpty 	@Pattern(regexp="^[A-Za-z]+$")
 	@Size(min=2,max=50, message="Doit être compris entre 2 et 50 caractères")
 	private String firstName;
-	@NotNull(message="Doit être rempli")
+	@Email
+	@NotEmpty
 	@Size(min=5,max=100, message="Doit être compris entre 2 et 100 caractères")
 	private String mail;
-	@NotNull
+	@NotEmpty
 	@Size(min=2,max=20)
 	private String password;
-	@NotNull
+	@NotEmpty
 	@Size(min=2, max=20)
 	private String confirmPassword;
 	//@Size(min=8,max=12)
 	private String phone;
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date birthdate;
-	@NotNull
+	@NotEmpty
 	@Size(min=2,max=4)
 	private String civility;
-	@NotNull
+	@NotEmpty @Pattern(regexp="^[A-Za-z]+$")
 	@Size(min=5,max=50)
 	private String country;
-	@NotNull
+	@NotEmpty
 	@Size(min=5,max=50)
 	private String street;
-	@NotNull
+	@NotEmpty
 	@Size(min=1,max=5)
 	private String number;
 	//@Size(min=1,max=4)
@@ -49,7 +54,7 @@ public class Customer {
 	@Min(value=1000)
 	@Max(value=9999)
 	private Integer postalCode;
-	@NotNull
+	@NotEmpty
 	@Size(min=2,max=50)
 	private String city;
 	

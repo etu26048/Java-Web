@@ -25,6 +25,26 @@ public class ArticleEntity {
 	@ManyToOne
 	private CategoryEntity category;
 	
+	@JoinColumn(name="Referencepromo", referencedColumnName="Reference")
+	@ManyToOne
+	private PromoEntity promo;
+	
+	public CategoryEntity getCategory() {
+		return category;
+	}
+
+	public void setCategory(CategoryEntity category) {
+		this.category = category;
+	}
+
+	public PromoEntity getPromo() {
+		return promo;
+	}
+
+	public void setPromo(PromoEntity promo) {
+		this.promo = promo;
+	}
+
 	public String getReference() {
 		return reference;
 	}

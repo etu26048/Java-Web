@@ -55,22 +55,6 @@
 	                </tr>
 				</tbody>
 	   </table>
-       <table class="table table-bordered">
-			<tbody>
-				 <tr>
-                  <td> 
-				<form class="form-horizontal">
-				<div class="control-group">
-				<label class="control-label"><strong> PROMO CODE: </strong> </label>
-				<div class="controls">
-				<a type="text" class="input-medium">PROMO CODE HERE</a>
-				</div>
-				</div>
-				</form>
-				</td>
-                </tr>
-			</tbody>
-		</table>
 				
 		<a href="<spring:url value='/cart' />" class="btn btn-large" ><img class="icon-arrow-left" src="<spring:url value='/images/leftArrow.png' />" /><spring:message code="Modify"/> <spring:message code="Order" /></a>
 		<form:button class="btn btn-large pull-right"><spring:message code="Confirm"/><img class="icon-arrow-right" src="<spring:url value='/images/rightArrow.png' />"/></form:button>

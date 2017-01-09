@@ -89,6 +89,8 @@ public class CartController {
 		
 		if(!errors.hasErrors()){
 			if(customer.getClientNumber() == null || customer.getMail().isEmpty()){
+				if(cart.getLine_map().isEmpty())
+					return "redirect:/cart";
 				return "redirect:/login";
 			}else{
 				return "integrated:confirmOrder";
@@ -103,6 +105,7 @@ public class CartController {
 					,@Valid @ModelAttribute(value="basket") Cart cart
 					,@ModelAttribute(value="amountWithReduction") Double reduction
 					,final BindingResult errors){
+		
 		if(!errors.hasErrors()){								
 			//Création de la commande
 			Order order = new Order();
@@ -139,7 +142,10 @@ public class CartController {
 			,final BindingResult errors
 			,@RequestParam(required=true) String lineKey){
 		
+		cart.calculateAmount((cart.getLine_map().get(lineKey).getArticle().getUnitPrice() * cart.getLine_map().get(lineKey).getQuantity()));
+		cart.countArticles(cart.getLine_map().get(lineKey).getQuantity());
 		cart.getLine_map().remove(lineKey);
+		
 		return "redirect:/cart";
 	}
 	

@@ -3,9 +3,8 @@
 
 <div class="span9">
     <ul class="breadcrumb">
-    <li><a href="index.html">Home</a> <span class="divider">/</span></li>
-    <li><a href="products.html"><spring:message code="Product"></spring:message></a> <span class="divider">/</span></li>
-    <li class="active"><spring:message code="Product" /><spring:message code="Details" /></li>
+    <li><a href="index.html">Home</a> <span class="divider"></span></li>
+    <li class="active"><spring:message code="Product" /> <spring:message code="Details" /></li>
     </ul>	
 	<div class="row">	  
 			<div id="gallery" class="span3">
