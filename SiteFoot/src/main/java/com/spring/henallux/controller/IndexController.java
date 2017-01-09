@@ -43,9 +43,15 @@ public class IndexController {
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public String home(Model model
-			, Locale locale){
+			, Locale locale
+			,@ModelAttribute(value=CURRENTUSER)Customer customer
+			,@ModelAttribute(value="basket")Cart cart){
+		
+		cart.calculateAmount();
+		cart.countArticles();
+		customer.getClass();
 		ArrayList<Category> categories = categoryDAO.getLabelCategory(locale.getLanguage());
-		model.addAttribute("articles",articleDAO.getAllArticles());
+		model.addAttribute("articles",articleDAO.getAllPromoArticles());
 		model.addAttribute("labelsCategory",categories);
 		return "integrated:index";
 	}	

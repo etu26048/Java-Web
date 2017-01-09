@@ -11,6 +11,7 @@ import com.spring.henallux.dataAccess.entity.CategoryEntity;
 import com.spring.henallux.dataAccess.repository.ArticleRepository;
 import com.spring.henallux.dataAccess.util.ProviderConverter;
 import com.spring.henallux.model.Article;
+import com.spring.henallux.model.Promo;
 
 @Service
 public class ArticleDAO {
@@ -23,6 +24,9 @@ public class ArticleDAO {
 	
 	@Autowired
 	private ArticleTraductionDAO articleTraductionDAO;
+	
+	@Autowired
+	private PromoDAO promoDAO;
 	
 	public Article save(Article article){
 		ArticleEntity articleEntity = providerConverter.articleModelToArticleEntity(article);
@@ -38,6 +42,23 @@ public class ArticleDAO {
 			articles.add(article);
 		}
 		return articles;
+	}
+	
+	public ArrayList<Article> getAllPromoArticles(){
+		ArrayList<Promo> promos = promoDAO.getAllValidPromotionalArticles();
+		ArrayList<Article> articles = this.getAllArticles();
+		ArrayList<Article> articles_in_promo = new ArrayList<Article>();
+		for(Promo promo : promos){
+			for(Article value : articles){
+				if(value.getPromo() != null){
+					if(value.getPromo().getReference().equals(promo.getReference())){
+						articles_in_promo.add(value);
+					}
+				}
+			}
+		}
+		
+		return articles_in_promo;
 	}
 	
 	public Long countAllArticles(){

@@ -78,13 +78,14 @@ public class ProductController {
 		model.addAttribute("labelsCategory",categories);
 		return "integrated:contact";
 	}
-	@RequestMapping(value="/details"
+	
+	/*@RequestMapping(value="/details"
 			, params={"articleId"}
 			, method=RequestMethod.GET)
 	public String goToDetails(@RequestParam(required=true) String articleId)
 	{		
 		return "redirect:/product_detail/detail?articleId="+articleId;
-	}
+	}*/
 		
 	//Ajouter au panier
 	@RequestMapping(value="/article"
@@ -104,7 +105,8 @@ public class ProductController {
 			Line line = new Line(1,article);
 			cart.getLine_map().put(itemId, line);
 		}
-		
+		cart.calculateAmount();
+		cart.countArticles();
 		return "redirect:/cart?itemId="+itemId;
 	}
 	

@@ -5,10 +5,10 @@
 	<div class="span9">
     <ul class="breadcrumb">
 		<li><a href="index.html">Home</a> <span class="divider"></span></li>
-		<li class="active"><spring:message code="SHOPPING"/><spring:message code="CART"/></li>
+		<li class="active"><spring:message code="SHOPPINGCART"></spring:message></li>
     </ul>
 	<h3>  SHOPPING CART [ <small> ${countItems } Item(s) </small>]<a href="<spring:url value='/index' />" class="btn btn-large pull-right">
-	<img src="<spring:url value='/images/leftArrow.png' />" class="icon-arrow-left"></img><spring:message code="Continue"/><spring:message code="Shopping"/> </a>
+	<img src="<spring:url value='/images/leftArrow.png' />" class="icon-arrow-left"></img><spring:message code="Continue"/> <spring:message code="Shopping"/> </a>
 	</h3>	
 	<hr class="soft"/>	
 			
@@ -60,26 +60,9 @@
 	                  <td class="label label-important" style="display:block"> <strong> ${amount - amountWithReduction } &euro;</strong></td>
 	                </tr>
 				</tbody>
-	   </table>
-       <table class="table table-bordered">
-			<tbody>
-				 <tr>
-                  <td> 
-				<form class="form-horizontal">
-				<div class="control-group">
-				<label class="control-label"><strong> PROMO CODE: </strong> </label>
-				<div class="controls">
-				<input type="text" class="input-medium" placeholder="CODE">
-				<button type="submit" class="btn"><spring:message code="ADD" /></button>
-				</div>
-				</div>
-				</form>
-				</td>
-                </tr>
-			</tbody>
-		</table>
+	   </table>	
 				
-		<a href="<spring:url value='/index' />" class="btn btn-large"><img src="<spring:url value='/images/leftArrow.png' />" class="icon-arrow-left"></img><spring:message code="Continue" /><spring:message code="Shopping" /> </a>
+		<a href="<spring:url value='/index' />" class="btn btn-large"><img src="<spring:url value='/images/leftArrow.png' />" class="icon-arrow-left"></img><spring:message code="Continue" /> <spring:message code="Shopping" /> </a>
 		<form:button class="btn btn-large pull-right"><spring:message code="Order"/> <img class="icon-arrow-right" src="<spring:url value='/images/rightArrow.png' />" /></form:button>
 	
 	</form:form>

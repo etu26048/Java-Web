@@ -26,9 +26,9 @@
 				action="/SiteFoot/register/create"
 				modelAttribute="currentUser" >
 				
-		<h4>Your personal information</h4>
+		<h4><spring:message code="information" /></h4>
 		<div class="control-group">
-		<label class="control-label">Title <sup>*</sup></label>
+		<label class="control-label"><spring:message code="title" /> <sup>*</sup></label>
 		<div class="controls">
 		<form:select path="civility" class="span1" >
 			<form:option value="Mr." label="Mr."></form:option>
@@ -39,14 +39,14 @@
 		</div>
 		</div>
 		<div class="control-group">
-			<form:label class="control-label" path="firstName">First name <sup>*</sup></form:label>
+			<form:label class="control-label" path="firstName"><spring:message code="Firstname"/> <sup>*</sup></form:label>
 			<div class="controls">
 			  <form:input type="text" path="firstName" placeholder="First Name"/>
 			  <form:errors path="firstName" ></form:errors>
 			</div>
 		 </div>
 		 <div class="control-group">
-			<form:label class="control-label" path="lastName">Last name <sup>*</sup></form:label>
+			<form:label class="control-label" path="lastName"><spring:message code="Lastname" /> <sup>*</sup></form:label>
 			<div class="controls">
 			  <form:input type="text" path="lastName" placeholder="Last Name" />
 			  <form:errors path="lastName"  class="red"/>
@@ -60,21 +60,21 @@
 		</div>
 	  </div>	  
 	<div class="control-group">
-		<form:label class="control-label" path="password">Password <sup>*</sup></form:label>
+		<form:label class="control-label" path="password"><spring:message code="Password" /> <sup>*</sup></form:label>
 		<div class="controls">
 		  <form:input type="password" path="password" placeholder="Password"/>
 	      <form:errors path="password" />
 		</div>
 	</div>
 	<div class="control-group">
-		<form:label class="control-label" path="confirmPassword">Confirm Password <sup>*</sup></form:label>
+		<form:label class="control-label" path="confirmPassword"><spring:message code="ConfirmPassword"/> <sup>*</sup></form:label>
 		<div class="controls">
 		  <form:input type="password"  path="confirmPassword" placeholder="Password" />
 	      <form:errors path="confirmPassword" />
 		</div>
 	</div>
 		<div class="control-group">
-		<form:label path="birthdate" class="control-label">Date of Birth</form:label>
+		<form:label path="birthdate" class="control-label" placeholder="dd/mm/yyyy"><spring:message code="DateofBirth" /></form:label>
 		<div class="controls">
 			<form:input path="birthdate" id="datepicker"/>
 			<form:errors path="birthdate"></form:errors>
@@ -82,16 +82,16 @@
 	  </div>
 
 	  <div class="control-group">
-			<form:label class="control-label" path="phone">Mobile Phone </form:label>
+			<form:label class="control-label" path="phone"><spring:message code="MobilePhone" /> </form:label>
 			<div class="controls">
 			  <form:input type="text" path="phone" placeholder="Mobile Phone"/> 
 			  <form:errors path="phone" />
 			</div>
 		</div>	
-		<h4>Your address</h4>
+		<h4><spring:message code="address" /></h4>
 		
 		<div class="control-group">
-			<form:label class="control-label" path="street">Street<sup>*</sup></form:label>
+			<form:label class="control-label" path="street"><spring:message code="Street" /><sup>*</sup></form:label>
 			<div class="controls">
 			  <form:input type="text" path="street" placeholder="street"/> 
 			  <form:errors path="street" />
@@ -99,7 +99,7 @@
 		</div>
 		
 		<div class="control-group">
-			<form:label class="control-label" path="number">Number<sup>*</sup></form:label>
+			<form:label class="control-label" path="number"><spring:message code="Number" /><sup>*</sup></form:label>
 			<div class="controls">
 			  <form:input type="text" path="number" placeholder="Number"/>
 			  <form:errors path="number" />
@@ -107,7 +107,7 @@
 		</div>
 		
 		<div class="control-group">
-			<form:label class="control-label" path="postal_box">Postal Box</form:label>
+			<form:label class="control-label" path="postal_box"><spring:message code="PostalBox" /></form:label>
 			<div class="controls">
 			  <form:input type="text" path="postal_box" placeholder="postal-box"/>
 			  <form:errors path="postal_box" />
@@ -115,14 +115,14 @@
 		</div>
 		
 		<div class="control-group">
-			<form:label class="control-label" path="city">City<sup>*</sup></form:label>
+			<form:label class="control-label" path="city"><spring:message code="City" /><sup>*</sup></form:label>
 			<div class="controls">
 			  <form:input type="text" path="city" placeholder="city"/> 
 			  <form:errors path="city"/>
 			</div>
 		</div>		
 		<div class="control-group">
-			<form:label class="control-label" path="postalCode">Zip / Postal Code<sup>*</sup></form:label>
+			<form:label class="control-label" path="postalCode"><spring:message code="zip" /><sup>*</sup></form:label>
 			<div class="controls">
 			  <form:input type="text" path="postalCode" placeholder="Zip / Postal Code"/> 
 			  <form:errors path="postalCode" />
@@ -130,7 +130,7 @@
 		</div>
 		
 		<div class="control-group">
-			<form:label class="control-label" path="country">Country<sup>*</sup></form:label>
+			<form:label class="control-label" path="country"><spring:message code="Country" /><sup>*</sup></form:label>
 			<div class="controls">
 			<form:select path="country" >
 				<form:option value="Belgium" label="Belgium"></form:option>
@@ -140,13 +140,13 @@
 		
 		
 	
-	<p><sup>*</sup>Required field	</p>
+	<p><sup>*</sup><spring:message code="Requiredfield"/>	</p>
 	
 	<div class="control-group">
 		<div class="controls">
 			<input type="hidden" name="email_create" value="1">
 			<input type="hidden" name="is_new_customer" value="1">
-			<form:button class="btn btn-large btn-success">Create</form:button>
+			<form:button class="btn btn-large btn-success"><spring:message code="Create"></spring:message></form:button>
 		</div>
 	</div>		
 </form:form>

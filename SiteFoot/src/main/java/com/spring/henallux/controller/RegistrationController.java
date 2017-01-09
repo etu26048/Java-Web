@@ -1,7 +1,6 @@
 package com.spring.henallux.controller;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 import javax.validation.Valid;
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,7 +22,7 @@ import com.spring.henallux.service.CryptingPassword;
 
 @Controller
 @RequestMapping(value="/register")
-@SessionAttributes({"currentUser"})
+@SessionAttributes({"currentUser", "basket"})
 public class RegistrationController {
 
 	
@@ -37,35 +35,50 @@ public class RegistrationController {
 	@Autowired
 	private CategoryDAO categoryDAO;
 	
+	private ArrayList<Category> categories;
 	@RequestMapping(method=RequestMethod.GET)
 	public String home(Model model
 			,Locale locale){
-		ArrayList<Category> categories = categoryDAO.getLabelCategory(locale.getLanguage());
+		
+		categories = categoryDAO.getLabelCategory(locale.getLanguage());
 		model.addAttribute("labelsCategory",categories);
-		//On passe le model à a la view et grâce à un databinding ,ici le ModelAtribute, on va pouvoir instancer customer
-		//cf Ch.Controller P.21
-		//model.addAttribute("currentUser",customer);
 		return "integrated:register";
 	}
 	
 	@RequestMapping(value="/create",method=RequestMethod.POST)
 	public String getUserForm(Model model,
 			@Valid @ModelAttribute(value="currentUser") Customer customer
-			,final BindingResult errors){
+			,final BindingResult errors
+			,Locale locale){
+		
+		categories = categoryDAO.getLabelCategory(locale.getLanguage());
+		model.addAttribute("labelsCategory",categories);
 		
 		if(!errors.hasErrors()){
-			try{
-				customer.setPassword(cryptingPw.cryptedPassword(customer.getPassword()));
-				customer.setConfirmPassword(cryptingPw.cryptedPassword(customer.getConfirmPassword()));
-				customerDAO.save(customer);
-			}catch(Exception e){
-				e.getStackTrace();
+			if(!customer.getConfirmPassword().equals(customer.getPassword())){
+				errors.rejectValue("confirmPassword", "notmatch.password");
+				return "integrated:register";
+			}else{
+				try{
+					customer.setPassword(cryptingPw.cryptedPassword(customer.getPassword()));
+					customer.setConfirmPassword(cryptingPw.cryptedPassword(customer.getConfirmPassword()));
+					customer = customerDAO.save(customer);
+				}catch(Exception e){
+					e.getStackTrace();
+				}
+				return "redirect:/login";
 			}
-			return "redirect:/index";
+			//return "integrated:register";
 		}
 		else{
-			List<ObjectError> errors_list =  errors.getAllErrors();
-			return "redirect:/register";
+			
+			return "integrated:register";
 		}
 	}
+	
+	@RequestMapping(method=RequestMethod.GET, value="/create")
+	public String registerBis(Model model,@Valid @ModelAttribute(value="currentUser")Customer currentUser,final BindingResult errors,Locale locale){
+		return "redirect:/register";
+	}
+	
 }

@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.spring.henallux.dataAccess.dao.ArticleDAO;
@@ -32,10 +32,11 @@ public class ProductDetailsController {
 	
 	private Article articleDetail;
 			
-	@RequestMapping(value="/detail",params={"articleId"}, method=RequestMethod.GET)
+	
+	@RequestMapping(value="/{articleId}", method=RequestMethod.GET)
 	public String home(Model model
 			, Locale locale
-			, @RequestParam(required = true)String articleId){
+			, @PathVariable String articleId){
 		
 		model.addAttribute("line",new Line());
 		articleDetail = articleDAO.findArticleById(articleId, locale.getLanguage());
@@ -59,7 +60,11 @@ public class ProductDetailsController {
 		}else{
 			cart.getLine_map().put(line.getArticle().getReference(), line);
 		}
+		cart.calculateAmount();
+		cart.countArticles();
 		
 		return "redirect:/cart?itemId="+articleDetail.getReference();
 	}
+	
+	
 }

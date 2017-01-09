@@ -3,9 +3,12 @@ package com.spring.henallux.controller;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.spring.henallux.dataAccess.dao.CategoryDAO;
 import com.spring.henallux.dataAccess.dao.CustomerDAO;
+import com.spring.henallux.model.Cart;
 import com.spring.henallux.model.Category;
 import com.spring.henallux.model.Customer;
 import com.spring.henallux.model.LoginForm;
@@ -20,7 +24,7 @@ import com.spring.henallux.service.CryptingPassword;
 
 @Controller
 @RequestMapping(value="/login")
-@SessionAttributes({"currentUser"})
+@SessionAttributes({"currentUser" ,"basket"})
 public class LoginController {
 	
 	@Autowired
@@ -45,28 +49,46 @@ public class LoginController {
 	
 	@RequestMapping(value="/send",method=RequestMethod.POST)
 	public String confirmLogin(Model model
-			, @ModelAttribute(value="loginForm") LoginForm loginForm){
+			,@Valid @ModelAttribute(value="loginForm") LoginForm loginForm
+			,@ModelAttribute(value="currentUser")Customer currentUser
+			,final BindingResult errors
+			,Locale locale){
 		
-		Customer customer = customerDAO.findLogin(loginForm.getPseudo());
-		if(customer != null){
-			try{
-				loginForm.setPassword(cryptingPw.cryptedPassword(loginForm.getPassword()));
-				if(customer.getPassword().equals(loginForm.getPassword())){
-					model.addAttribute("currentUser", customer);
-					return "redirect:/index";
+		Customer customer = customerDAO.findLogin(loginForm.getmail());
+	
+		if(!errors.hasErrors()){
+			if(customer != null){
+				try{
+					loginForm.setPassword(cryptingPw.cryptedPassword(loginForm.getPassword()));
+					if(customer.getPassword().equals(loginForm.getPassword())){
+						model.addAttribute("currentUser", customer);
+						return "redirect:/index";
+					}
+					else{
+						errors.rejectValue("password", "notmatch.loginPassword");
+						return "integrated:login";
+					}
+				}catch(Exception e){
+					e.printStackTrace();
 				}
-			}catch(Exception e){
-				e.printStackTrace();
+			}else{
+				errors.rejectValue("mail", "email.notfound");
+				return "integrated:login";
 			}
 		}
-		return "integrated:errors";
+		return "redirect:/index";
 	}
 	
 	@RequestMapping(value="/disconnect", method=RequestMethod.GET)
 	public String disconnecting(Model model
-					,@ModelAttribute(value="currentUser") Customer currentUser){
+					,@ModelAttribute(value="currentUser") Customer currentUser
+					,@ModelAttribute(value="basket")Cart cart){
 		
+		cart.getLine_map().clear();
+		cart.calculateAmount();
+		cart.countArticles();
 		model.addAttribute("currentUser", new Customer());
 		return "redirect:/index";
 	}
+	
 }

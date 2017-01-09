@@ -21,6 +21,7 @@ public class CustomerDAO {
 	private ProviderConverter providerConverter;
 	
 	public Customer save(Customer customer){
+		
 		CustomerEntity customerEntity = providerConverter.customerModelToCustomerEntity(customer);
 		customerEntity = customerRepository.save(customerEntity);
 		return providerConverter.customerEntityToCustomerModel(customerEntity);
@@ -37,6 +38,9 @@ public class CustomerDAO {
 	}
 	
 	public Customer findLogin(String email){
+		if(customerRepository.findByEmail(email) == null){
+			return null;
+		}
 		return providerConverter.customerEntityToCustomerModel(customerRepository.findByEmail(email));
 	}
 }

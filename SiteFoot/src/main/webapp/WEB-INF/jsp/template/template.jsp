@@ -31,7 +31,13 @@
 	<div id="header">
 		<div class="container">
 		<div id="welcomeLine" class="row">
-			<div class="span6"><spring:message code="Welcome"></spring:message><strong> ${currentUser.lastName } ${currentUser.firstName } </strong></div>
+			<div class="span6"><spring:message code="Welcome"></spring:message>
+			<c:choose>
+				<c:when test="${not empty currentUser.clientNumber}">
+					<strong> ${currentUser.lastName } ${currentUser.firstName } </strong>
+				</c:when>
+			</c:choose>
+			</div>
 			<div class="span6">
 			<div class="pull-right">
 				<spring:url var="localeFr" value="">
@@ -46,8 +52,8 @@
 					<a href="${localeFr}"><img src='<spring:url value="/images/fra.png"/>' width="26" height="17"/></a>
 				    <a href="${localeEn}"><img src='<spring:url value="/images/eng.png"/>' width="26" height="17"/></a>
 				</span>
-				<span class="btn btn-mini">$155.00</span>
-				<a href="<spring:url value='/cart' />" ><span class="btn btn-mini btn-primary"><i class="icon-shopping-cart icon-white"><img  src="<spring:url value='/images/cart.png' />" width="14" height="14" /></i> [ 3 ] Items in your cart </span></a> 
+				<span class="btn btn-mini"> ${basket.amount } &euro;</span>
+				<a href="<spring:url value='/cart' />" ><span class="btn btn-mini btn-primary"><i class="icon-shopping-cart icon-white"><img  src="<spring:url value='/images/cart.png' />" width="14" height="14" /></i>${basket.countArticle } <spring:message code="Items" /> </span></a> 
 			</div>
 			</div>
 		</div>
@@ -59,13 +65,11 @@
 		</a>
 		  <div class="navbar-inner">
 		    <a class="brand" href="<spring:url value='/index' />"><img src="<spring:url value='/images/logo.png' />" alt="Bootsshop"/></a>
+		    <form class="form-inline navbar-search" method="POST" action="" >
+				<input id="srchFld" class="srchTxt" type="text" placeholder="Rechercher un article" />
+			    <button type="submit" id="submitButton" class="btn btn-primary">Go</button>
+			</form>
 		    <ul id="topMenu" class="nav pull-right">
-		    <!-- <li class=""><a href="<spring:url value='/promo' />">Specials Offer</a>
-				 </li>
-				 <li class=""><a href="<spring:url value='/shoes' />">Shoes</a>
-				 </li>
-				 <li class=""><a href="<spring:url value='/balls' />">Balls</a>
-				 </li>-->
 		     <c:forEach items="${labelsCategory}" var="cat">
 				 <li class=""><a href="<spring:url value='/category/${cat.id}' />">${cat.name}</a></li>
 			 </c:forEach>
@@ -73,17 +77,15 @@
 				 <a class="" href="<spring:url value='/category/contact' />"><span><spring:message code="Contact"></spring:message></span></a>
 			 </li>
 			 <c:choose >
-				 <c:when test="${empty currentUser.mail}">
+				 <c:when test="${empty currentUser.clientNumber}">
 					 <li>
 						 <a class="" href="<spring:url value='/register' />"><span><spring:message code="Signin"></spring:message></span></a>
 					 </li>
-					 <!--<spring:message code="Signin" />-->
 					 <li>
 						 <a href="<spring:url value='/login' />" role="button" data-toggle="modal" style="padding-right:0"><span class="btn btn-large btn-success"><spring:message code="Login"></spring:message></span></a>		  
 					 </li>
-					 <!--<spring:message code="Login" />	-->
 				 </c:when>
-				 <c:when test="${not empty currentUser.mail }">
+				 <c:when test="${not empty currentUser.clientNumber }">
 					 <li>
 						 <a href="<spring:url value='/login/disconnect' />" role="button" data-toggle="modal" style="padding-right:0"><span class="btn btn-large btn-success"><spring:message code="Disconnect"></spring:message></span></a>		  
 					 </li>
@@ -108,14 +110,15 @@
         </script>
         <div id="mainBody">
 			<div class="container">
-			<div class="row">
-			<div id="sidebar" class="span3">
-				<div class="well well-small"><a id="myCart" href="<spring:url value='/product_detail' /> "><img src="<spring:url value='/images/ico-cart.png'/>" alt="cart">3 Items in your cart  <span class="badge badge-warning pull-right">155.00 &euro;</span></a></div>
-				<br/>
-			</div>				<div>
-				<tiles:insertAttribute name="main-content" />
-			</div>
-			</div>
+				<div class="row">
+					<div id="sidebar" class="span3">
+						<div class="well well-small"><a id="myCart" href="<spring:url value='/cart' /> "><img src="<spring:url value='/images/ico-cart.png'/>" alt="cart">${basket.countArticle } <spring:message code="Items"></spring:message><span class="badge badge-warning pull-right">${basket.amount } &euro;</span></a></div>
+							<br/>
+					</div>				
+					<div>
+						<tiles:insertAttribute name="main-content" />
+					</div>
+				</div>
 			</div>
 		</div>
 	</body>
