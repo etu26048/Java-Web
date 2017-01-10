@@ -1,5 +1,6 @@
 package com.spring.henallux.dataAccess.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,7 +20,12 @@ public interface ArticleRepository extends JpaRepository<ArticleEntity, String>{
 	public List<ArticleEntity> findByCategory(CategoryEntity id);
 	
 	@Query(COUNT_ARTICLE_BY_CATEGORY)
-	public Integer countArticleByCategory(@Param("idCategory") Long id);	
-
+	public Integer countArticleByCategory(@Param("idCategory") Long id);
+	
+	String SEARCH = "select a from ArticleEntity a, ArticleTraductionEntity ate "+
+						"where ate.articleEntity.reference = a.reference and ate.label like %:word% "+
+						"and ate.languageEntity.idLangue = :idLang";
+	@Query(SEARCH)
+	public ArrayList<ArticleEntity> searchArticles(@Param("word") String word, @Param("idLang")String lang);
 	
 }

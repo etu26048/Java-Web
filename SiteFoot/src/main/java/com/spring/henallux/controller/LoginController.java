@@ -36,13 +36,15 @@ public class LoginController {
 	@Autowired
 	private CryptingPassword cryptingPw;
 	
+	private ArrayList<Category> categories;
+	
 	@RequestMapping(method=RequestMethod.GET)
 	public String home(Model model
 			,Locale locale
 			,@ModelAttribute(value = "loginForm")LoginForm loginForm){
 		
 		model.addAttribute("loginForm", new LoginForm());
-		ArrayList<Category> categories = categoryDAO.getLabelCategory(locale.getLanguage());
+		categories = categoryDAO.getLabelCategory(locale.getLanguage());
 		model.addAttribute("labelsCategory",categories);
 		return "integrated:login";
 	}
@@ -56,28 +58,36 @@ public class LoginController {
 		
 		Customer customer = customerDAO.findLogin(loginForm.getmail());
 	
-		if(!errors.hasErrors()){
-			if(customer != null){
-				try{
-					loginForm.setPassword(cryptingPw.cryptedPassword(loginForm.getPassword()));
-					if(customer.getPassword().equals(loginForm.getPassword())){
-						model.addAttribute("currentUser", customer);
-						return "redirect:/index";
-					}
-					else{
-						errors.rejectValue("password", "notmatch.loginPassword");
-						return "integrated:login";
-					}
-				}catch(Exception e){
-					e.printStackTrace();
+		if(customer != null){
+			try{
+				loginForm.setPassword(cryptingPw.cryptedPassword(loginForm.getPassword()));
+				if(customer.getPassword().equals(loginForm.getPassword())){
+					model.addAttribute("currentUser", customer);
+					return "redirect:/index";
 				}
-			}else{
-				errors.rejectValue("mail", "email.notfound");
-				return "integrated:login";
+				else{
+					errors.rejectValue("password", "notmatch.loginPassword");
+				}
+			}catch(Exception e){
+				e.printStackTrace();
 			}
+		}else{
+			errors.rejectValue("mail", "mail.notfound");
 		}
-		return "redirect:/index";
+		return "integrated:login";
 	}
+
+	@RequestMapping(value="/send",method=RequestMethod.GET)
+	public String confirmLoginBis(Model model
+			,@Valid @ModelAttribute(value="loginForm") LoginForm loginForm
+			,@ModelAttribute(value="currentUser")Customer currentUser
+			,final BindingResult errors
+			,Locale locale)
+	{
+		return home(model, locale, loginForm);
+	}
+
+	
 	
 	@RequestMapping(value="/disconnect", method=RequestMethod.GET)
 	public String disconnecting(Model model

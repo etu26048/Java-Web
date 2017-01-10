@@ -49,7 +49,6 @@ public class IndexController {
 		
 		cart.calculateAmount();
 		cart.countArticles();
-		customer.getClass();
 		ArrayList<Category> categories = categoryDAO.getLabelCategory(locale.getLanguage());
 		model.addAttribute("articles",articleDAO.getAllPromoArticles());
 		model.addAttribute("labelsCategory",categories);

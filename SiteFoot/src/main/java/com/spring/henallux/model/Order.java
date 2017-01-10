@@ -2,11 +2,16 @@ package com.spring.henallux.model;
 
 import java.util.Date;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 public class Order {
 	
 	private Integer reference;
 	private Date commandDate;
+	@Min(value=0)
 	private double reductionAmount;
+	@NotNull
 	private Customer customer;
 	
 	public Customer getCustomer() {

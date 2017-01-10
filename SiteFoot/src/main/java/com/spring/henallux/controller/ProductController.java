@@ -1,13 +1,13 @@
 package com.spring.henallux.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,6 +33,8 @@ public class ProductController {
 	
 	private ArrayList<Category> categories;
 	
+	private String word;
+	
 	@RequestMapping(value="/0", method=RequestMethod.GET)
 	public String getShoesPage(Model model
 			, Locale locale){
@@ -41,8 +43,6 @@ public class ProductController {
 		model.addAttribute("labelsCategory",categories);
 		model.addAttribute("countArticles",articleDAO.countArticle((long) 0));
 		model.addAttribute("articles",articleDAO.getArticlesByCategory(categoryDAO.getSearchCategory((long) 0),locale.getLanguage()));
-		//model.addAttribute("categories",categoryDAO.getAllCategories());
-		//model.addAttribute("category",categories.get(0));
 		return "integrated:product";
 	}
 	
@@ -54,8 +54,6 @@ public class ProductController {
 		model.addAttribute("labelsCategory",categories);
 		model.addAttribute("countArticles",articleDAO.countArticle((long) 1));
 		model.addAttribute("articles",articleDAO.getArticlesByCategory(categoryDAO.getSearchCategory((long) 1),locale.getLanguage()));
-		//model.addAttribute("categories",categoryDAO.getAllCategories());
-		//model.addAttribute("category",categories.get(1));
 		return "integrated:product";
 	}
 	
@@ -67,8 +65,6 @@ public class ProductController {
 		model.addAttribute("labelsCategory",categories);
 		model.addAttribute("countArticles",articleDAO.countArticle((long) 2));
 		model.addAttribute("articles",articleDAO.getArticlesByCategory(categoryDAO.getSearchCategory((long) 2),locale.getLanguage()));
-		//model.addAttribute("categories",categoryDAO.getAllCategories());
-		//model.addAttribute("category",categories.get(2));
 		return "integrated:product";
 	}
 	
@@ -110,6 +106,19 @@ public class ProductController {
 		return "redirect:/cart?itemId="+itemId;
 	}
 	
+	@RequestMapping(value="/search",params={"searchWord"},method=RequestMethod.POST)
+	public String getSearchPage(Model model, @RequestParam(required=false) String searchWord, Locale locale){
+		
+		word = searchWord;
+		if(!searchWord.isEmpty()){
+			categories = categoryDAO.getLabelCategory(locale.getLanguage());
+			model.addAttribute("labelsCategory",categories);
+			model.addAttribute("countArticles",articleDAO.searchArticles(searchWord, locale.getLanguage()).size());
+			model.addAttribute("articles", articleDAO.searchArticles(searchWord, locale.getLanguage()));
+			return "integrated:search_response";
+		}
+		else{return "redirect:/index";}
+	}
 	
 
 }

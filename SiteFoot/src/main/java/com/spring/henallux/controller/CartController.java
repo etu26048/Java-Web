@@ -54,14 +54,16 @@ public class CartController {
 	private Double amountWithReduction(){
 		return 0.00;
 	}
-
+	
+	private ArrayList<Category> categories;
+	
 	@RequestMapping(method=RequestMethod.GET)
 	public String home(Model model
 				,Locale locale
 				,@ModelAttribute(value="basket")Cart cart){
 		
 		model.addAttribute("countItems",cart.getLine_map().size());
-		ArrayList<Category> categories = categoryDAO.getLabelCategory(locale.getLanguage());
+		categories = categoryDAO.getLabelCategory(locale.getLanguage());
 		model.addAttribute("labelsCategory",categories);
 		return "integrated:cart";
 	}
@@ -76,7 +78,7 @@ public class CartController {
 		model.addAttribute("countItems",cart.getLine_map().size());
 		Article article = articleDAO.findArticleById(itemId, locale.getLanguage());
 		model.addAttribute("line", new Line(cart.getLine_map().get(itemId).getQuantity(),article));
-		ArrayList<Category> categories = categoryDAO.getLabelCategory(locale.getLanguage());
+		categories = categoryDAO.getLabelCategory(locale.getLanguage());
 		model.addAttribute("labelsCategory",categories);
 		return "integrated:cart";
 	}
@@ -148,5 +150,17 @@ public class CartController {
 		
 		return "redirect:/cart";
 	}
+	
+	@RequestMapping(value="/clear_cart", method=RequestMethod.GET)
+	public String clearCart(@ModelAttribute(value="basket")Cart cart){
+		
+		if(!cart.getLine_map().isEmpty()){
+			cart.getLine_map().clear();
+			cart.calculateAmount();
+			cart.countArticles();
+		}
+		return "redirect:/cart";
+	}
+	
 	
 }
