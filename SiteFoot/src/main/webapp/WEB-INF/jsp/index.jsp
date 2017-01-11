@@ -8,7 +8,7 @@
 		  <c:forEach items="${articles}" var="article">
 			<li class="span3">
 			  <div class="thumbnail">
-				<a href = '<spring:url value="/category/details?articleId=${article.reference }" />'><img src="<spring:url value='/images/${article.urlImage}' />" width="160" height="160"  alt=""/></a>
+				<a href="<spring:url value='/product_detail/${article.reference }' />"><img src="<spring:url value='/images/${article.urlImage}' />" width="160" height="160"  alt=""/></a>
 				<div class="caption">
 				  <h5>${article.name}</h5>
 				  <p> 

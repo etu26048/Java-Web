@@ -65,7 +65,7 @@
 		</a>
 		  <div class="navbar-inner">
 		    <a class="brand" href="<spring:url value='/index' />"><img src="<spring:url value='/images/logo.png' />" alt="Bootsshop"/></a>
-		    <form class="form-inline navbar-search" method="POST" action="/SiteFoot/category/search/" >
+		    <form class="form-inline navbar-search" method="GET" action="/SiteFoot/category/search" >
 				<input name="searchWord" type="text" placeholder="Rechercher un article" />
 			    <button type="submit" id="submitButton" class="btn btn-primary">Go</button>
 			</form>

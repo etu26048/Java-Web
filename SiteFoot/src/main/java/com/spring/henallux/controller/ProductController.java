@@ -32,9 +32,7 @@ public class ProductController {
 	private CategoryDAO categoryDAO;
 	
 	private ArrayList<Category> categories;
-	
-	private String word;
-	
+		
 	@RequestMapping(value="/0", method=RequestMethod.GET)
 	public String getShoesPage(Model model
 			, Locale locale){
@@ -106,10 +104,19 @@ public class ProductController {
 		return "redirect:/cart?itemId="+itemId;
 	}
 	
-	@RequestMapping(value="/search",params={"searchWord"},method=RequestMethod.POST)
+	@RequestMapping(value="/search",params={"searchWord"},method=RequestMethod.GET)
 	public String getSearchPage(Model model, @RequestParam(required=false) String searchWord, Locale locale){
 		
-		word = searchWord;
+		categories = categoryDAO.getLabelCategory(locale.getLanguage());
+		model.addAttribute("labelsCategory",categories);
+		model.addAttribute("countArticles",articleDAO.searchArticles(searchWord, locale.getLanguage()).size());
+		model.addAttribute("articles", articleDAO.searchArticles(searchWord, locale.getLanguage()));
+		//return getSearchPageBis(model, searchWord, locale);
+		return "integrated:search_response";
+	}
+	
+	/*@RequestMapping(value="/{searchWord}",params={"searchWord"}, method=RequestMethod.GET)
+	public String getSearchPageBis(Model model, @RequestParam(required=false) String searchWord, Locale locale){
 		if(!searchWord.isEmpty()){
 			categories = categoryDAO.getLabelCategory(locale.getLanguage());
 			model.addAttribute("labelsCategory",categories);
@@ -118,7 +125,8 @@ public class ProductController {
 			return "integrated:search_response";
 		}
 		else{return "redirect:/index";}
-	}
+		
+	}*/
 	
 
 }
