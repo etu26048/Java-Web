@@ -22,7 +22,17 @@
 						  class="form-horizontal qtyFrm">
 						  
 				  <div class="control-group">
-					<label class="control-label"><span>${article.unitPrice } &euro;</span></label>
+				  	<c:if test="${article.inPromo}">
+						<label class="control-label">
+							<span><fmt:formatNumber value=" ${article.unitPrice = article.unitPrice - (article.unitPrice * (article.promo.percentage / 100))}" type="currency" currencySymbol="€"/></span>
+						</label>
+					</c:if>
+					<c:if test="${!article.inPromo }">
+						<label class="control-label">
+							<span><fmt:formatNumber value=" ${article.unitPrice}" type="currency" currencySymbol="€"/></span>
+						</label>
+					</c:if>
+					
 					<div class="controls">
 						<form:input path="quantity" type="number" min = "1" value = "1" class="span1" placeholder="Qty."/>
 						<form:button class="btn btn-large btn-primary pull-right"> Add to cart <i class=" icon-shopping-cart"><img  src="<spring:url value='/images/cart.png' />" sizes="14x14"/></i></form:button>

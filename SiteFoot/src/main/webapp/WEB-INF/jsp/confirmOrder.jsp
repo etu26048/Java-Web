@@ -33,12 +33,20 @@
 	                  <td>${product_line.value.article.reference}</td>
 					  <td>
 						<div class="input-append">
-							<form:input path="line_map[${product_line.key}].quantity" class="span1" style="max-width:50px;" width="25px" value="${product_line.value.quantity}" id="appendedInputButtons" type="text" />						</div>
+							<form:input path="line_map[${product_line.key}].quantity" class="span1" style="max-width:50px;" width="25px" value="${product_line.value.quantity}" id="appendedInputButtons" type="text" disabled="true" />						
+						</div>
 					  </td>
 	                  <td>${product_line.value.article.unitPrice } &euro;</td>
-	                  <td>0.00 &euro;</td>
-	                  <td>${product_line.value.article.unitPrice * product_line.value.quantity}&euro;</td>
-	                  <p hidden>${amount = amount + product_line.value.article.unitPrice * product_line.value.quantity}</p>
+                  	  <c:if test="${product_line.value.article.inPromo }">
+						<c:set var="reductPrice" value="${( product_line.value.article.unitPrice * ( product_line.value.article.promo.percentage / 100)) * product_line.value.quantity}" />
+					  	<p hidden>${amountWithReduction = amountWithReduction + reductPrice }</p>
+					  </c:if>
+					  <c:if test="${!product_line.value.article.inPromo }">
+						<c:set var="reductPrice" value="0.00" />
+					  </c:if>
+	                  <td><fmt:formatNumber value="${reductPrice } " type="currency" currencySymbol="€"/></td>
+	                  <td> <fmt:formatNumber value=" ${(product_line.value.article.unitPrice * product_line.value.quantity) - reductPrice}" type="currency" currencySymbol="€"/></td>
+	                  <p hidden>${amount = amount + (product_line.value.article.unitPrice * product_line.value.quantity) - reductPrice}</p>
 	                </tr>
                 </c:forEach>				
 	                <tr>
@@ -46,12 +54,12 @@
 	                  <td> ${amount } &euro;</td>
 	                </tr>
 					 <tr>
-	                  <td colspan="6" style="text-align:right">Total<spring:message code="Discount"/>:	</td>
-	                  <td> ${amountWithReduction } &euro;</td>
+	                  <td colspan="6" style="text-align:right">Total <spring:message code="Discount"/>:	</td>
+	                  <td> ${amountWithReduction} &euro;</td>
 	                </tr>
 					 <tr>
 	                  <td colspan="6" style="text-align:right"><strong>TOTAL </strong></td>
-	                  <td class="label label-important" style="display:block"> <strong> ${amount - amountWithReduction } &euro;</strong></td>
+	                  <td class="label label-important" style="display:block"> <strong> <fmt:formatNumber value=" ${amount - amountWithReduction }" type="currency" currencySymbol="€"/></strong></td>
 	                </tr>
 				</tbody>
 	   </table>

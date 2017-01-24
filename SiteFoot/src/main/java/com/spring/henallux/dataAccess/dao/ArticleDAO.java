@@ -29,6 +29,7 @@ public class ArticleDAO {
 	private PromoDAO promoDAO;
 	
 	public Article save(Article article){
+		
 		ArticleEntity articleEntity = providerConverter.articleModelToArticleEntity(article);
 		articleEntity = articleRepository.save(articleEntity);
 		return providerConverter.articleEntityToModel(articleEntity);
@@ -38,7 +39,14 @@ public class ArticleDAO {
 		List<ArticleEntity> articlesEntity = articleRepository.findAll();
 		ArrayList<Article> articles = new ArrayList<Article>();
 		for(ArticleEntity value : articlesEntity){
+			
 			Article article = providerConverter.articleEntityToModel(value);
+			for(Promo promo : promoDAO.getAllValidPromotionalArticles()){
+				
+				if(article.getPromo() != null && promo.getReference().equals(article.getPromo().getReference())){
+					article.setInPromo(true);
+				}
+			}
 			articles.add(article);
 		}
 		return articles;
@@ -71,6 +79,12 @@ public class ArticleDAO {
 		for(ArticleEntity value : articlesEntity){
 			Article article = providerConverter.articleEntityToModel(value);
 			article.setName(articleTraductionDAO.getTradLabelByArticle(value.getReference(), codeLanguage));
+			for(Promo promo : promoDAO.getAllValidPromotionalArticles()){
+				
+				if(article.getPromo() != null && promo.getReference().equals(article.getPromo().getReference())){
+					article.setInPromo(true);
+				}
+			}
 			articles.add(article);
 		}
 		return articles;
@@ -83,16 +97,30 @@ public class ArticleDAO {
 	public Article findArticleById(String id, String codeLanguage){
 		Article article = providerConverter.articleEntityToModel(articleRepository.findOne(id));
 		article.setName(articleTraductionDAO.getTradLabelByArticle(article.getReference(), codeLanguage));
-		return article;
-	}
-	
-	/*public ArrayList<Article> getAllArticlesTraduction(String codeLanguage){
-		ArrayList<Article> articles = getAllArticles();
-		for(Article value : articles){
-			value.setName(articleTraductionDAO.getTradLabelByArticle(value.getReference(), codeLanguage));
+		for(Promo promo : promoDAO.getAllValidPromotionalArticles()){
+			
+			if(article.getPromo() != null && promo.getReference().equals(article.getPromo().getReference())){
+				article.setInPromo(true);
+			}
 		}
-		return articles;
-	}*/
+		return article;
+	}	
 	
+	public ArrayList<Article> searchArticles(String word, String codeLanguage){
+		
+		ArrayList<Article> articles = new ArrayList<Article>();
+		for(ArticleEntity articleEntity : articleRepository.searchArticles(word,codeLanguage)){
+			Article article = providerConverter.articleEntityToModel(articleEntity);
+			article.setName(articleTraductionDAO.getTradLabelByArticle(article.getReference(), codeLanguage));
+			for(Promo promo : promoDAO.getAllValidPromotionalArticles()){
+				
+				if(article.getPromo() != null && promo.getReference().equals(article.getPromo().getReference())){
+					article.setInPromo(true);
+				}
+			}
+			articles.add(article);
+		}		
+		return articles;
+	}
 	
 }

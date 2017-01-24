@@ -1,7 +1,10 @@
 package com.spring.henallux.model;
 
+import javax.validation.constraints.Min;
+
 public class Line {
 
+	@Min(value=1)
 	private Integer quantity;
 	private Article article;
 	

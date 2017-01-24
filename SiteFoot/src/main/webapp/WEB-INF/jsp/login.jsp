@@ -17,14 +17,14 @@
 					
 		  <div class="control-group">								
 			<form:input type="text"  path="mail" placeholder="Email" />
-			<form:errors path="mail" />
+			<form:errors path="mail" style="color:red"/>
 		  </div>
 		  <div class="control-group">
 			<form:input type="password"  path="password" placeholder="Password" />
-			<form:errors path="password" />
+			<form:errors path="password" style="color:red"/>
 		  </div>
 		  <div class="control-group">	
-				<form:button value='/send' class="btn btn-success">Sign in</form:button>
+				<form:button value='/send' class="btn btn-success"><spring:message code="Signin"/></form:button>
 		  </div>
 		</form:form>
 	 </div>

@@ -16,23 +16,24 @@ public class Customer {
 	
 	private Long clientNumber;
 	@NotEmpty
-	@Size(min=2,max=50, message="Doit être compris entre 2 et 50 caractères")
+	@Size(min=2,max=50)
 	@Pattern(regexp="^[A-Za-z]+$")
 	private String lastName;
 	@NotEmpty 	@Pattern(regexp="^[A-Za-z]+$")
-	@Size(min=2,max=50, message="Doit être compris entre 2 et 50 caractères")
+	@Size(min=2,max=50)
 	private String firstName;
 	@Email
 	@NotEmpty
-	@Size(min=5,max=100, message="Doit être compris entre 2 et 100 caractères")
+	@Size(min=5,max=100)
 	private String mail;
 	@NotEmpty
+	@Pattern(regexp="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")
 	@Size(min=2,max=20)
 	private String password;
 	@NotEmpty
 	@Size(min=2, max=20)
 	private String confirmPassword;
-	//@Size(min=8,max=12)
+	@Size(min=0,max=12)
 	private String phone;
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date birthdate;

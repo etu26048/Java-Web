@@ -10,7 +10,20 @@ public class Article {
 	private Promo promo;
 	private Category category;
 	private String name;
+	private Boolean inPromo;
 	
+	public Article(){
+		
+		inPromo = false;
+	}
+	
+	
+	public Boolean getInPromo() {
+		return inPromo;
+	}
+	public void setInPromo(Boolean inPromo) {
+		this.inPromo = inPromo;
+	}
 	public String getName() {
 		return name;
 	}

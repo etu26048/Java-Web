@@ -36,6 +36,7 @@ public class RegistrationController {
 	private CategoryDAO categoryDAO;
 	
 	private ArrayList<Category> categories;
+	
 	@RequestMapping(method=RequestMethod.GET)
 	public String home(Model model
 			,Locale locale){
@@ -68,7 +69,6 @@ public class RegistrationController {
 				}
 				return "redirect:/login";
 			}
-			//return "integrated:register";
 		}
 		else{
 			
