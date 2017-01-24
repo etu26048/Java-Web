@@ -6,9 +6,45 @@ public class Article {
 	
 	private String urlImage;
 	private String reference;
-	private double unitPrice;
+	private Double unitPrice;
+	private Promo promo;
+	private Category category;
+	private String name;
+	private Boolean inPromo;
+	
+	public Article(){
+		
+		inPromo = false;
+	}
 	
 	
+	public Boolean getInPromo() {
+		return inPromo;
+	}
+	public void setInPromo(Boolean inPromo) {
+		this.inPromo = inPromo;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public void setUnitPrice(Double unitPrice) {
+		this.unitPrice = unitPrice;
+	}
+	public Promo getPromo() {
+		return promo;
+	}
+	public void setPromo(Promo promo) {
+		this.promo = promo;
+	}
+	public Category getCategory() {
+		return category;
+	}
+	public void setCategory(Category category) {
+		this.category = category;
+	}
 	public String getUrlImage() {
 		return urlImage;
 	}

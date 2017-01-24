@@ -4,16 +4,16 @@ import java.util.Date;
 
 public class Promo {
 	
-	private String reference;
+	private Integer reference;
 	private double percentage;
 	private Date startDate;
 	private Date endDate;
 	
 	
-	public String getReference() {
+	public Integer getReference() {
 		return reference;
 	}
-	public void setReference(String reference) {
+	public void setReference(Integer reference) {
 		this.reference = reference;
 	}
 	public double getPercentage() {

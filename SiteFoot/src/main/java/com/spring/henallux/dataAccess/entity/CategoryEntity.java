@@ -6,11 +6,20 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Categorie")
+@Table(name="categorie")
 public class CategoryEntity {
 
 	@Id
-	@Column(name="IdCategorie")
-	private Integer category_id;
+	@Column(name="Idcategorie")
+	private Long id;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	
 }

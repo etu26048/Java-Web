@@ -2,11 +2,16 @@ package com.spring.henallux.model;
 
 import java.util.Date;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 public class Order {
 	
-	private String reference;
+	private Integer reference;
 	private Date commandDate;
+	@Min(value=0)
 	private double reductionAmount;
+	@NotNull
 	private Customer customer;
 	
 	public Customer getCustomer() {
@@ -15,10 +20,10 @@ public class Order {
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
-	public String getReference() {
+	public Integer getReference() {
 		return reference;
 	}
-	public void setReference(String reference) {
+	public void setReference(Integer reference) {
 		this.reference = reference;
 	}
 	public Date getCommandDate() {
